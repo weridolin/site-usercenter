@@ -24,6 +24,7 @@ func init() {
 }
 
 func main() {
+	// fmt.Println("DB_URI", os.Getenv("DB_URI"))
 	flag.Parse()
 
 	var c config.Config

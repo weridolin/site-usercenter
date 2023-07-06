@@ -1,0 +1,1 @@
+go run .\services\users\cmd\rest\users.go  -f ./services/users/cmd/rest/etc/users.yaml
