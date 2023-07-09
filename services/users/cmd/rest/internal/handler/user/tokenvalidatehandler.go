@@ -7,6 +7,7 @@ import (
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/svc"
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
+	xerrors "github.com/zeromicro/x/errors"
 )
 
 func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
@@ -20,6 +21,7 @@ func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := user.NewTokenValidateLogic(r.Context(), svcCtx)
 		resp, err := l.TokenValidate(&req)
 		if err != nil {
+			w.WriteHeader(err.(*xerrors.CodeMsg).Code)
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
 			w.Header().Set("X-Forwarded-User", resp.UserId)

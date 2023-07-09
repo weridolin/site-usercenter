@@ -6,11 +6,13 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.14.1
+	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/gofrs/uuid v4.4.0+incompatible
 	github.com/joho/godotenv v1.5.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/lib/pq v1.10.9
 	github.com/zeromicro/go-zero v1.5.3
+	github.com/zeromicro/x v0.0.0-20230424055333-01c7fb9548d4
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.2
 )

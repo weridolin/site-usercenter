@@ -23,3 +23,14 @@ func GenToken(user User, key string) string {
 	}
 	return token
 }
+
+func ParseToken(tokenString string, key string) (jwt.MapClaims, error) {
+	tokenStr := tokenString[7:] //去掉 bearer 字符串
+	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+		return []byte(key), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return token.Claims.(jwt.MapClaims), nil
+}

@@ -1,8 +1,10 @@
 package svc
 
 import (
+	"github.com/go-redis/redis"
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/config"
 	"github.com/weridolin/site-gateway/services/users/models"
+	"github.com/weridolin/site-gateway/tools"
 	"github.com/zeromicro/go-zero/core/logx"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -10,9 +12,10 @@ import (
 )
 
 type ServiceContext struct {
-	Config    config.Config
-	DB        *gorm.DB
-	UserModel models.UserModel
+	Config      config.Config
+	DB          *gorm.DB
+	UserModel   models.UserModel
+	RedisClient *redis.Client
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -27,10 +30,17 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	}
 	//自动同步更新表结构
 	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.UserRoles{})
+	db.AutoMigrate(&models.Role{})
+	db.AutoMigrate(&models.Menu{})
+	db.AutoMigrate(&models.MenuPermission{})
+	db.AutoMigrate(&models.Resource{})
+	db.AutoMigrate(&models.ResourcePermission{})
 
 	return &ServiceContext{
-		Config:    c,
-		DB:        db,
-		UserModel: models.NewUserModel("user"),
+		Config:      c,
+		DB:          db,
+		UserModel:   models.NewUserModel("user"),
+		RedisClient: tools.NewRedisClient(),
 	}
 }
