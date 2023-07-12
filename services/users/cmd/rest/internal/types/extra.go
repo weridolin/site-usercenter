@@ -8,8 +8,19 @@ func (u UserInfo) FromUserModel(user models.User) *UserInfo {
 		Email:        user.Email,
 		Phone:        user.Phone,
 		Avatar:       user.Avatar,
-		Role:         user.Role,
 		IsSuperAdmin: user.IsSuperAdmin,
 		Age:          user.Age,
+	}
+}
+
+func (m Menu) FromMenuModel(menu models.Menu) *Menu {
+	return &Menu{
+		Name:      menu.Name,
+		Url:       menu.Url,
+		Icon:      menu.Icon,
+		ParentId:  menu.ParentId,
+		Redirect:  menu.Redirect,
+		Component: menu.Component,
+		Type:      menu.Type,
 	}
 }

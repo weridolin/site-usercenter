@@ -12,6 +12,17 @@ type UserInfo struct {
 	Gender       int8     `json:"gender"`
 }
 
+type Menu struct {
+	Name      string `json:"name"`
+	Url       string `json:"url"`
+	Icon      string `json:"icon"`
+	ParentId  int  `json:"parent_id"`
+	Redirect  string `json:"redirect"`
+	Component string `json:"component"`
+	Type      int   `json:"type"`
+
+}
+
 type UserInfoWithToken struct {
 	UserInfo
 	AccessToken  string `json:"access_token"`

@@ -6,12 +6,13 @@ import (
 
 type Role struct {
 	gorm.Model
-	CreateUser  int     `gorm:"comment:创建者ID"`
-	Zone        string  `gorm:"uniqueIndex:udx_role;not null;comment:域;size:256;default:site"` //角色的作用范围
-	Name        string  `gorm:"uniqueIndex:udx_role;not null;comment:角色名;size:256"`
-	Users       []*User `gorm:"many2many:user_roles;"`
-	Description string  `gorm:"comment:角色描述"`
-	Menus       []*Menu `gorm:"many2many:user_roles;"`
+	CreateUser  int         `gorm:"comment:创建者ID"`
+	Zone        string      `gorm:"uniqueIndex:udx_role;not null;comment:域;size:256;default:site"` //角色的作用范围
+	Name        string      `gorm:"uniqueIndex:udx_role;not null;comment:角色名;size:256"`
+	Users       []*User     `gorm:"many2many:user_roles;ForeignKey:ID;JoinForeignKey:RoleId;References:ID;joinReferences:UserId"`
+	Description string      `gorm:"comment:角色描述"`
+	Menus       []*Menu     `gorm:"many2many:auth_menu_permission;ForeignKey:ID;JoinForeignKey:RoleId;References:ID;joinReferences:MenuId;"`
+	Resources   []*Resource `gorm:"many2many:auth_resource_permission;ForeignKey:ID;JoinForeignKey:RoleId;References:ID;joinReferences:ResourceId;"`
 }
 
 func (Role) TableName() string {
@@ -59,16 +60,28 @@ func (t *Role) QueryById(condition interface{}, DB *gorm.DB) (*Role, error) {
 	return role, err
 }
 
+func (r *Role) Query(condition interface{}, DB *gorm.DB) ([]*Role, error) {
+	var roles []*Role
+	err := DB.Table("auth_role").Preload("Menus").Preload("Resources").Where(condition).Find(&roles).Error
+	return roles, err
+}
+
+func (r UserRoles) Query(condition interface{}, DB *gorm.DB) ([]*UserRoles, error) {
+	var roles []*UserRoles
+	err := DB.Table("user_roles").Where(condition).Find(&roles).Error
+	return roles, err
+}
+
 type Menu struct {
 	gorm.Model
 	// ServerName string `gorm:"uniqueIndex:udx_menu;not null;comment:服务名"`
-	Name      string `gorm:"uniqueIndex:udx_menu;not null;comment:菜单名;size:256"`
-	ParentId  int    `gorm:"comment:父菜单ID"`
-	Url       string `gorm:"comment:菜单路径"`
-	Component string `gorm:"comment:菜单组件"`
-	Icon      string `gorm:"comment:菜单图标"`
-	Redirect  string `gorm:"comment:菜单重定向"`
-	Type      int    `gorm:"comment:菜单类型:0菜单 1按钮;default:0;size:1"`
+	Name      string `gorm:"uniqueIndex:udx_menu;not null;comment:菜单名;size:256" josn:"name"`
+	ParentId  int    `gorm:"comment:父菜单ID" json:"parent_id"`
+	Url       string `gorm:"comment:菜单路径" json:"url"`
+	Component string `gorm:"comment:菜单组件" json:"component"`
+	Icon      string `gorm:"comment:菜单图标" json:"icon"`
+	Redirect  string `gorm:"comment:菜单重定向" json:"redirect"`
+	Type      int    `gorm:"comment:菜单类型:0菜单 1按钮;default:0;size:1" json:"type"`
 }
 
 func (Menu) TableName() string {
@@ -111,22 +124,22 @@ func (m *Menu) QueryById(condition interface{}, DB *gorm.DB) (*Menu, error) {
 
 type MenuPermission struct {
 	gorm.Model
-	MenuId int `gorm:"comment:菜单ID"`
-	RoleId int `gorm:"comment:角色ID"`
+	MenuId uint `gorm:"comment:菜单ID"`
+	RoleId uint `gorm:"comment:角色ID"`
 }
 
 func (MenuPermission) TableName() string {
 	return "auth_menu_permission"
 }
 
-func BindMenuRole(menuId, roleId int, DB *gorm.DB) error {
+func BindMenuRole(menuId, roleId uint, DB *gorm.DB) error {
 	return DB.Create(&MenuPermission{
 		MenuId: menuId,
 		RoleId: roleId,
 	}).Error
 }
 
-func BatchBindMenuRole(MenuIdList []int, roleId int, DB *gorm.DB) error {
+func BatchBindMenuRole(MenuIdList []uint, roleId uint, DB *gorm.DB) error {
 	var list []MenuPermission
 	for _, v := range MenuIdList {
 		list = append(list, MenuPermission{
@@ -179,24 +192,28 @@ func (r *Resource) QueryById(condition interface{}, DB *gorm.DB) (*Resource, err
 	return resource, err
 }
 
+func (r *Resource) ToString() string {
+	return r.ServerName + "*" + ":" + r.Url + ":" + r.Method
+}
+
 type ResourcePermission struct {
 	gorm.Model
-	ResourceId int `gorm:"comment:资源ID"`
-	RoleId     int `gorm:"comment:角色ID"`
+	ResourceId uint `gorm:"comment:资源ID"`
+	RoleId     uint `gorm:"comment:角色ID"`
 }
 
 func (ResourcePermission) TableName() string {
 	return "auth_resource_permission"
 }
 
-func BindResourcePermission(resourceId, roleId int, DB *gorm.DB) error {
+func BindResourcePermission(resourceId, roleId uint, DB *gorm.DB) error {
 	return DB.Create(&ResourcePermission{
 		ResourceId: resourceId,
 		RoleId:     roleId,
 	}).Error
 }
 
-func BatchBindResourcePermission(resourceIdList []int, roleId int, DB *gorm.DB) error {
+func BatchBindResourcePermission(resourceIdList []uint, roleId uint, DB *gorm.DB) error {
 	var list []ResourcePermission
 	for _, v := range resourceIdList {
 		list = append(list, ResourcePermission{

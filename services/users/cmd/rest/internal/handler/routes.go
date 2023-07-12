@@ -29,40 +29,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: user.LogoutHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/usercenter/api/v1"),
 	)
-
-	// server.AddRoutes(
-	// 	[]rest.Route{
-	// 		// {
-	// 		// 	Method:  http.MethodGet,
-	// 		// 	Path:    "/user",
-	// 		// 	Handler: user.UserInfoDetailHandler(serverCtx),
-	// 		// },
-	// 		// {
-	// 		// 	Method:  http.MethodPut,
-	// 		// 	Path:    "/user",
-	// 		// 	Handler: user.UpdateUserInfoHandler(serverCtx),
-	// 		// },
-	// 		{
-	// 			Method:  http.MethodPost,
-	// 			Path:    "/logout",
-	// 			Handler: user.LogoutHandler(serverCtx),
-	// 		},
-	// 		// {
-	// 		// 	Method:  http.MethodPost,
-	// 		// 	Path:    "/auth/token/refresh",
-	// 		// 	Handler: user.TokenRefreshHandler(serverCtx),
-	// 		// },
-	// 		// {
-	// 		// 	Method:  http.MethodGet,
-	// 		// 	Path:    "/auth/token/validate",
-	// 		// 	Handler: user.TokenValidateHandler(serverCtx),
-	// 		// },
-	// 	},
-	// 	// rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),放在网关做
-	// 	rest.WithPrefix("/api/v1"),
-	// )
-
 
 	server.AddRoutes(
 		[]rest.Route{
@@ -77,6 +45,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: user.TokenValidateHandler(serverCtx),
 			},
 		},
-		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret), // todo改成接口里面实现验证逻辑
+		// rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret), // todo改成接口里面实现验证逻辑
 	)
 }

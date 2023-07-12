@@ -33,7 +33,7 @@ func (l *LogoutLogic) Logout(req *types.ValidateTokenReq) (resp *types.LogoutRes
 		return nil, err
 	}
 	timeRemain := time.Unix(int64(claims["exp"].(float64)), 0).Sub(time.Now())
-	l.svcCtx.RedisClient.Set(tools.InvalidTokenKey(req.Authorization), 1, timeRemain*time.Second)
+	l.svcCtx.RedisClient.Set(l.ctx, tools.InvalidTokenKey(req.Authorization), 1, timeRemain*time.Second)
 	return &types.LogoutResp{
 		BaseResponse: types.BaseResponse{
 			Code: 0,

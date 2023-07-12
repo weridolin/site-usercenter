@@ -35,8 +35,15 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 			},
 		}, nil
 	}
+	// roleArr := make([]string, 0)
+	// for _, role := range user.Roles {
+	// 	// fmt.Println(role.Menus, role.Resources)
+	// 	// for _, menu := range role.Menus {
+	// 	// 	menuArr = append(menuArr, types.Menu{}.FromMenuModel(*menu))
+	// 	// }
+	// 	roleArr = append(roleArr, role.Name)
+	// }
 	accessToken := models.GenToken(*user, l.svcCtx.Config.JwtAuth.AccessSecret)
-	logx.Info(accessToken)
 	return &types.LoginResp{
 		BaseResponse: types.BaseResponse{
 			Code: 0,
@@ -49,8 +56,10 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 				Email:  user.Email,
 				Phone:  user.Phone,
 				Age:    user.Age,
+				// Role:   roleArr,
 				Gender: user.Gender,
 			},
+			// Menus: menuArr,
 		},
 	}, nil
 }
