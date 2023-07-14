@@ -35,6 +35,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	db.AutoMigrate(&models.UserRoles{})
 	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Role{})
+
 	db.AutoMigrate(&models.Menu{})
 	db.AutoMigrate(&models.Resource{})
 

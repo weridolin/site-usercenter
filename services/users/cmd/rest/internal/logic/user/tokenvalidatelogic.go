@@ -38,7 +38,8 @@ func (l *TokenValidateLogic) TokenValidate(req *types.ValidateTokenReq, apiPermi
 	// 校验token是否合法
 	claims, err := models.ParseToken(req.Authorization, l.svcCtx.Config.JwtAuth.AccessSecret)
 	if err != nil {
-		return nil, err
+		fmt.Println("parse token error", err)
+		return nil, xerrors.New(http.StatusUnauthorized, err.Error())
 	}
 	userID := claims["id"]
 	// 校验用户是否有权限

@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -26,7 +27,11 @@ func GenToken(user User, key string) string {
 }
 
 func ParseToken(tokenString string, key string) (jwt.MapClaims, error) {
-	tokenStr := tokenString[7:] //去掉 bearer 字符串
+	var tokenStr = tokenString
+	// fmt.Println(strings.HasPrefix(tokenString, "Bearer"))
+	if strings.HasPrefix(tokenString, "Bearer") {
+		tokenStr = tokenString[7:] //去掉 bearer 字符串
+	}
 	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 		return []byte(key), nil
 	})
