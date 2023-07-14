@@ -40,7 +40,7 @@ services:
 #       - KONG_PROXY_ACCESS_LOG=/dev/stdout
 #       - KONG_ADMIN_ACCESS_LOG=/dev/stdout
 #       - KONG_PROXY_ERROR_LOG=/dev/stderr
-#       - KONG_ADMIN_ERROR_LOG=/dev/stderr
+#       - KONG_ADMIN_ERROR_LOG=/devupdate/stderr
 #       - KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl
 #     restart: on-failure
 #     ports:
@@ -86,13 +86,53 @@ services:
       - GOPROXY=https://goproxy.cn/,direct
     networks:
       - default    
+  
+  siteoldbackend1:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    command:       
+      - /bin/bash
+      - -c
+      - |
+        supervisord  -c celery.conf
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver 0.0.0.0:8000
+    # volumes:
+    #   - /pythons/blogNew/werido-site-backend/:/var/www/html/weridoBlog/
+    ports:
+      - "8001:8001"
+    depends_on:
+      - sitedb
+      - redis
+
+  siteoldbackend2:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    command:       
+      - /bin/bash
+      - -c
+      - |
+        supervisord  -c celery.conf
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver 0.0.0.0:8000
+    # volumes:
+    #   - /pythons/blogNew/werido-site-backend/:/var/www/html/weridoBlog/
+    ports:
+      - "8001:8001"
+    depends_on:
+      - sitedb
+      - redis
 
   front:
     container_name: site-nginx
     image: nginx
     ports:
     - 80:80
-    - 443:443
+    # - 443:443
     restart: unless-stopped
     volumes:
     # - /pythons/site-new/dist:/usr/share/nginx/html/
