@@ -6,11 +6,11 @@ import (
 
 type Role struct {
 	gorm.Model
-	CreateUser  int         `gorm:"comment:创建者ID"`
-	Zone        string      `gorm:"uniqueIndex:udx_role;not null;comment:域;size:256;default:site"` //角色的作用范围
-	Name        string      `gorm:"uniqueIndex:udx_role;not null;comment:角色名;size:256"`
+	CreateUser  int         `gorm:"comment:创建者ID" json:"create_user" yaml:"create_user"`
+	Zone        string      `gorm:"uniqueIndex:udx_role;not null;comment:域;size:256;default:site" yaml:"zone" json:"zone"` //角色的作用范围
+	Name        string      `gorm:"uniqueIndex:udx_role;not null;comment:角色名;size:256" json:"name" yaml:"name"`
 	Users       []*User     `gorm:"many2many:user_roles;ForeignKey:ID;JoinForeignKey:RoleId;References:ID;joinReferences:UserId"`
-	Description string      `gorm:"comment:角色描述"`
+	Description string      `gorm:"comment:角色描述" json:"description" yaml:"description"`
 	Menus       []*Menu     `gorm:"many2many:auth_menu_permission;ForeignKey:ID;JoinForeignKey:RoleId;References:ID;joinReferences:MenuId;"`
 	Resources   []*Resource `gorm:"many2many:auth_resource_permission;ForeignKey:ID;JoinForeignKey:RoleId;References:ID;joinReferences:ResourceId;"`
 }
@@ -75,13 +75,13 @@ func (r UserRoles) Query(condition interface{}, DB *gorm.DB) ([]*UserRoles, erro
 type Menu struct {
 	gorm.Model
 	// ServerName string `gorm:"uniqueIndex:udx_menu;not null;comment:服务名"`
-	Name      string `gorm:"uniqueIndex:udx_menu;not null;comment:菜单名;size:256" josn:"name"`
-	ParentId  int    `gorm:"comment:父菜单ID" json:"parent_id"`
-	Url       string `gorm:"comment:菜单路径" json:"url"`
-	Component string `gorm:"comment:菜单组件" json:"component"`
-	Icon      string `gorm:"comment:菜单图标" json:"icon"`
-	Redirect  string `gorm:"comment:菜单重定向" json:"redirect"`
-	Type      int    `gorm:"comment:菜单类型:0菜单 1按钮;default:0;size:1" json:"type"`
+	Name      string `gorm:"uniqueIndex:udx_menu;not null;comment:菜单名;size:256" josn:"name" yaml:"name"`
+	ParentId  int    `gorm:"comment:父菜单ID" json:"parent_id" yaml:"parent_id"`
+	Url       string `gorm:"comment:菜单路径" json:"url" yaml:"url"`
+	Component string `gorm:"comment:菜单组件" json:"component" yaml:"component"`
+	Icon      string `gorm:"comment:菜单图标" json:"icon" yaml:"icon"`
+	Redirect  string `gorm:"comment:菜单重定向" json:"redirect" yaml:"redirect"`
+	Type      int    `gorm:"comment:菜单类型:0菜单 1按钮;default:0;size:1" json:"type" yaml:"type"`
 }
 
 func (Menu) TableName() string {
@@ -153,20 +153,24 @@ func BatchBindMenuRole(MenuIdList []uint, roleId uint, DB *gorm.DB) error {
 // 资源api鉴权
 type Resource struct {
 	gorm.Model
-	ServerName string `gorm:"uniqueIndex:udx_resource;not null;comment:服务名;size:256"`
-	Url        string `gorm:"uniqueIndex:udx_resource;not null;comment:资源路径;size:256"`
-	Method     string `gorm:"uniqueIndex:udx_resource;not null;comment:资源方法 ;set(GET,POST,PUT,DELETE);size:256"`
+	ServerName  string `gorm:"uniqueIndex:udx_resource;not null;comment:服务名;size:256" json:"server_name" yaml:"server_name"`
+	Url         string `gorm:"uniqueIndex:udx_resource;not null;comment:资源路径;size:256" json:"url" yaml:"url"`
+	Method      string `gorm:"uniqueIndex:udx_resource;not null;comment:资源方法 ;set(GET,POST,PUT,DELETE);size:256" json:"method" yaml:"method"`
+	Version     string `gorm:"comment:资源版本;size:256" json:"version" yaml:"version"`
+	Description string `gorm:"comment:资源描述;size:256" json:"description" yaml:"description" `
 }
 
 func (Resource) TableName() string {
 	return "auth_resource"
 }
 
-func (r *Resource) Create(serverName, url, method string, DB *gorm.DB) (*Resource, error) {
+func (r *Resource) Create(serverName, url, method, version, description string, DB *gorm.DB) (*Resource, error) {
 	new := Resource{
-		ServerName: serverName,
-		Url:        url,
-		Method:     method,
+		ServerName:  serverName,
+		Url:         url,
+		Method:      method,
+		Version:     version,
+		Description: description,
 	}
 	err := DB.Create(&new).Error
 	return &new, err
@@ -192,8 +196,9 @@ func (r *Resource) QueryById(condition interface{}, DB *gorm.DB) (*Resource, err
 	return resource, err
 }
 
-func (r *Resource) ToString() string {
-	return r.ServerName + "*" + ":" + r.Url + ":" + r.Method
+func (r *Resource) Format() string {
+	// {{servername}}/api/{{version}}/{{url}}:{{method}}
+	return r.ServerName + "/api/" + r.Version + r.Url + ":" + r.Method
 }
 
 type ResourcePermission struct {

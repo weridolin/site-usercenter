@@ -1,11 +1,16 @@
 package svc
 
 import (
+	"fmt"
+	"os"
+	"path"
+
 	"github.com/redis/go-redis/v9"
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/config"
 	"github.com/weridolin/site-gateway/services/users/models"
 	"github.com/weridolin/site-gateway/tools"
 	"github.com/zeromicro/go-zero/core/logx"
+	"gopkg.in/yaml.v2"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -17,6 +22,39 @@ type ServiceContext struct {
 	UserModel   models.UserModel
 	RoleModel   models.Role
 	RedisClient *redis.Client
+}
+
+func LoadInitData(DB *gorm.DB) {
+	// 加载内置权限和角色
+	// file := "etc/initdata.yaml"
+	dir, _ := os.Getwd()
+	file := path.Join(dir, "usercenter", "initData", "default.yaml")
+	// fmt.Println("dir:", file)
+	dataBytes, err := os.ReadFile(file)
+	if err != nil {
+		fmt.Println("读取文件失败：", err)
+		return
+	}
+	// fmt.Println("yaml 文件的内容: \n", string(dataBytes))
+	var defaultData struct {
+		Menus     []models.Menu                `yaml:"menus"`
+		Resources map[string][]models.Resource `yaml:"resources"`
+		Roles     []models.Role                `yaml:"roles"`
+	}
+	// var defaultData map[interface{}]interface{}
+	err = yaml.Unmarshal(dataBytes, &defaultData)
+	if err != nil {
+		fmt.Println("解析 yaml 文件失败：", err)
+		return
+	}
+	fmt.Printf("defaultData → %+v\n", defaultData)
+	// 初始数据插入数据库
+	for _, resources := range defaultData.Resources {
+		DB.Create(resources)
+	}
+	DB.Create(defaultData.Menus)
+	DB.Create(defaultData.Roles)
+
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -38,6 +76,8 @@ func NewServiceContext(c config.Config) *ServiceContext {
 
 	db.AutoMigrate(&models.Menu{})
 	db.AutoMigrate(&models.Resource{})
+
+	LoadInitData(db)
 
 	return &ServiceContext{
 		Config:      c,

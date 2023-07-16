@@ -77,10 +77,10 @@ func (l *TokenValidateLogic) HasPermission(userId int, apiPermissionRequired str
 			} else {
 				for _, role := range roles {
 					for _, resource := range role.Resources {
-						if apiPermissionRequired == resource.ServerName+":"+resource.Url+":"+resource.Method {
+						if apiPermissionRequired == resource.Format() {
 							res = true
 						}
-						resourceList = append(resourceList, resource.ServerName+":"+resource.Url+":"+resource.Method)
+						resourceList = append(resourceList, resource.Format())
 					}
 				}
 				// 将权限存入redis
