@@ -184,12 +184,59 @@ resources:
       version: "v1"
       description: "创建一个API脚本"
 
-# menus:
-# - name: "首页"
-#   url: "/home"
-#   icon: "home"
-#   children: []
+menus: ## 管理后台的菜单权限
+  - id: 0
+    name: "权限管理"
+    url: "/admin/permissions"
+    icon: "Lock" # element ui icon
+    parent_id: null
+    component: "PermissionManager" # vue component name
+    route_name: "adminPermissions"
+    type: 0 # 0: 菜单 1: 按钮
 
+  - id: 1
+    name: "菜单管理"
+    url: "/admin/permissions/menus"
+    icon: "Menu" # element ui icon
+    parent_id: 0
+    component: "MenuManager" # vue component name
+    route_name: "adminPermissionsMenus"
+    type: 0 # 0: 菜单 1: 按钮
+
+  - id: 2
+    name: "数据库管理"
+    url: "/admin/permissions/models"
+    icon: "List" # element ui icon
+    parent_id: 0
+    component: "ModelOpManager" # vue component name
+    route_name: "adminPermissionsModelsOp"
+    type: 0 # 0: 菜单 1: 按钮
+
+  - id: 3
+    name: "角色管理"
+    url: "/admin/permissions/roles"
+    icon: "UserFilled" # element ui icon
+    parent_id: 0
+    component: "RoleManager" # vue component name
+    route_name: "adminPermissionsRoles"
+    type: 0 # 0: 菜单 1: 按钮
+
+  - id: 4
+    name: "用户管理"
+    url: "/admin/users"
+    icon: "User" # element ui icon
+    parent_id: null
+    component: "UserManager" # vue component name
+    route_name: "adminUserManager"
+    type: 0 # 0: 菜单 1: 按钮
+
+  - id: 5
+    name: "个人档案"
+    url: "/admin/profile"
+    icon: "User" # element ui icon
+    parent_id: null
+    component: "UserProfile" # vue component name
+    route_name: "UserProfile"
 
 roles:
   - id: 0

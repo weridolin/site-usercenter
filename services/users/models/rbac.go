@@ -78,9 +78,9 @@ type Menu struct {
 	Name      string `gorm:"uniqueIndex:udx_menu;not null;comment:菜单名;size:256" josn:"name" yaml:"name"`
 	ParentId  int    `gorm:"comment:父菜单ID" json:"parent_id" yaml:"parent_id"`
 	Url       string `gorm:"comment:菜单路径" json:"url" yaml:"url"`
-	Component string `gorm:"comment:菜单组件" json:"component" yaml:"component"`
+	Component string `gorm:"comment:菜单组件(Vue)" json:"component" yaml:"component"`
 	Icon      string `gorm:"comment:菜单图标" json:"icon" yaml:"icon"`
-	Redirect  string `gorm:"comment:菜单重定向" json:"redirect" yaml:"redirect"`
+	RouteName string `gorm:"comment:菜单路由名称" json:"route_name" yaml:"route_name"`
 	Type      int    `gorm:"comment:菜单类型:0菜单 1按钮;default:0;size:1" json:"type" yaml:"type"`
 }
 
@@ -88,14 +88,14 @@ func (Menu) TableName() string {
 	return "auth_menu"
 }
 
-func (m *Menu) Create(name, url, component, icon, redirect string, parentId, menuType int, DB *gorm.DB) (*Menu, error) {
+func (m *Menu) Create(name, url, component, icon, routeName string, parentId, menuType int, DB *gorm.DB) (*Menu, error) {
 	new := Menu{
 		Name:      name,
 		ParentId:  parentId,
 		Url:       url,
 		Component: component,
 		Icon:      icon,
-		Redirect:  redirect,
+		RouteName: routeName,
 		Type:      menuType,
 	}
 	err := DB.Create(&new).Error

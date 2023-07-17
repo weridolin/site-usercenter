@@ -17,7 +17,7 @@ type Menu struct {
 	Url       string `json:"url"`
 	Icon      string `json:"icon"`
 	ParentId  int  `json:"parent_id"`
-	Redirect  string `json:"redirect"`
+	RouteName  string `json:"route_name"`
 	Component string `json:"component"`
 	Type      int   `json:"type"`
 

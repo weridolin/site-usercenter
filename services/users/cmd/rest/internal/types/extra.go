@@ -19,7 +19,7 @@ func (m Menu) FromMenuModel(menu models.Menu) *Menu {
 		Url:       menu.Url,
 		Icon:      menu.Icon,
 		ParentId:  menu.ParentId,
-		Redirect:  menu.Redirect,
+		RouteName: menu.RouteName,
 		Component: menu.Component,
 		Type:      menu.Type,
 	}
