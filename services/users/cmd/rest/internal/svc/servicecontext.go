@@ -28,7 +28,7 @@ func LoadInitData(DB *gorm.DB) {
 	// 加载内置权限和角色
 	// file := "etc/initdata.yaml"
 	dir, _ := os.Getwd()
-	file := path.Join(dir, "usercenter", "initData", "default.yaml")
+	file := path.Join(dir, "initData", "default.yaml")
 	// fmt.Println("dir:", file)
 	dataBytes, err := os.ReadFile(file)
 	if err != nil {
@@ -37,9 +37,10 @@ func LoadInitData(DB *gorm.DB) {
 	}
 	// fmt.Println("yaml 文件的内容: \n", string(dataBytes))
 	var defaultData struct {
-		Menus     []models.Menu                `yaml:"menus"`
-		Resources map[string][]models.Resource `yaml:"resources"`
-		Roles     []models.Role                `yaml:"roles"`
+		Menus         []models.Menu                `yaml:"menus"`
+		Resources     map[string][]models.Resource `yaml:"resources"`
+		Roles         []models.Role                `yaml:"roles"`
+		RolesResource []map[string]interface{}     `yaml:"roles_resources"`
 	}
 	// var defaultData map[interface{}]interface{}
 	err = yaml.Unmarshal(dataBytes, &defaultData)
@@ -47,7 +48,7 @@ func LoadInitData(DB *gorm.DB) {
 		fmt.Println("解析 yaml 文件失败：", err)
 		return
 	}
-	fmt.Printf("defaultData → %+v\n", defaultData)
+	// fmt.Printf("defaultData → %+v\n", defaultData)
 	// 初始数据插入数据库
 	for _, resources := range defaultData.Resources {
 		DB.Create(resources)
@@ -55,6 +56,28 @@ func LoadInitData(DB *gorm.DB) {
 	DB.Create(defaultData.Menus)
 	DB.Create(defaultData.Roles)
 
+	// 加载admin用户权限
+	for _, permission := range defaultData.RolesResource {
+		if permission["resource_id"] == "*" {
+			var count int64
+			DB.Model(&models.Resource{}).Count(&count)
+			var resourceList []uint
+			for i := 1; i <= int(count); i++ {
+				resourceList = append(resourceList, uint(i))
+			}
+			err := models.BatchBindResourcePermission(resourceList, uint(permission["role_id"].(int)), DB)
+			fmt.Println("err:", err)
+		} else {
+			var list []models.ResourcePermission
+			for _, v := range permission["resource_id"].([]interface{}) {
+				list = append(list, models.ResourcePermission{
+					ResourceId: uint(v.(int)),
+					RoleId:     uint(permission["role_id"].(int)),
+				})
+			}
+			DB.Create(&list)
+		}
+	}
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {

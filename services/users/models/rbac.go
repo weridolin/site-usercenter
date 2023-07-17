@@ -1,11 +1,20 @@
 package models
 
 import (
+	"time"
+
 	"gorm.io/gorm"
 )
 
+type BaseModel struct {
+	ID        uint `gorm:"primarykey" json:"id" yaml:"id"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
+}
+
 type Role struct {
-	gorm.Model
+	BaseModel
 	CreateUser  int         `gorm:"comment:创建者ID" json:"create_user" yaml:"create_user"`
 	Zone        string      `gorm:"uniqueIndex:udx_role;not null;comment:域;size:256;default:site" yaml:"zone" json:"zone"` //角色的作用范围
 	Name        string      `gorm:"uniqueIndex:udx_role;not null;comment:角色名;size:256" json:"name" yaml:"name"`
@@ -20,9 +29,9 @@ func (Role) TableName() string {
 }
 
 type UserRoles struct {
-	gorm.Model
-	UserId uint `gorm:"comment:用户ID"`
-	RoleId uint `gorm:"comment:角色ID"`
+	BaseModel
+	UserId uint `gorm:"comment:用户ID uniqueIndex:udx_user_roles"`
+	RoleId uint `gorm:"comment:角色ID uniqueIndex:udx_user_roles"`
 }
 
 func (UserRoles) TableName() string {
@@ -73,7 +82,7 @@ func (r UserRoles) Query(condition interface{}, DB *gorm.DB) ([]*UserRoles, erro
 }
 
 type Menu struct {
-	gorm.Model
+	BaseModel
 	// ServerName string `gorm:"uniqueIndex:udx_menu;not null;comment:服务名"`
 	Name      string `gorm:"uniqueIndex:udx_menu;not null;comment:菜单名;size:256" josn:"name" yaml:"name"`
 	ParentId  int    `gorm:"comment:父菜单ID" json:"parent_id" yaml:"parent_id"`
@@ -123,9 +132,9 @@ func (m *Menu) QueryById(condition interface{}, DB *gorm.DB) (*Menu, error) {
 }
 
 type MenuPermission struct {
-	gorm.Model
-	MenuId uint `gorm:"comment:菜单ID"`
-	RoleId uint `gorm:"comment:角色ID"`
+	BaseModel
+	MenuId uint `gorm:"comment:菜单ID uniqueIndex:udx_menu_permission"`
+	RoleId uint `gorm:"comment:角色ID uniqueIndex:udx_menu_permission"`
 }
 
 func (MenuPermission) TableName() string {
@@ -152,7 +161,7 @@ func BatchBindMenuRole(MenuIdList []uint, roleId uint, DB *gorm.DB) error {
 
 // 资源api鉴权
 type Resource struct {
-	gorm.Model
+	BaseModel
 	ServerName  string `gorm:"uniqueIndex:udx_resource;not null;comment:服务名;size:256" json:"server_name" yaml:"server_name"`
 	Url         string `gorm:"uniqueIndex:udx_resource;not null;comment:资源路径;size:256" json:"url" yaml:"url"`
 	Method      string `gorm:"uniqueIndex:udx_resource;not null;comment:资源方法 ;set(GET,POST,PUT,DELETE);size:256" json:"method" yaml:"method"`
@@ -202,9 +211,9 @@ func (r *Resource) Format() string {
 }
 
 type ResourcePermission struct {
-	gorm.Model
-	ResourceId uint `gorm:"comment:资源ID"`
-	RoleId     uint `gorm:"comment:角色ID"`
+	BaseModel
+	ResourceId uint `gorm:"unique_index:udx_resource_role comment:资源ID" json:"resource_id" yaml:"resource_id"`
+	RoleId     uint `gorm:"unique_index:udx_resource_role comment:角色ID" json:"role_id" yaml:"role_id"`
 }
 
 func (ResourcePermission) TableName() string {

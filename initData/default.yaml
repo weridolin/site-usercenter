@@ -2,21 +2,21 @@
 
 resources:
   home:
-    - id: 0
+    - id: 1
       server_name: "home"
       url: "/comments"
       method: "GET"
       version: "v1"
       description: "网站评论"
 
-    - id: 1
+    - id: 2
       server_name: "home"
       url: "/friendslinks"
       method: "GET"
       version: "v1"
       description: "友链"
 
-    - id: 2
+    - id: 3
       server_name: "home"
       url: "/updatelog"
       method: "GET"
@@ -24,49 +24,49 @@ resources:
       description: "更新日志"
   
   blogs:
-    - id: 3
+    - id: 4
       server_name: "blogs"
       url: "/articles/<num:int>"
       method: "GET"
       version: "v2"
       description: "获取文章详情"    
 
-    - id: 4
+    - id: 5
       server_name: "blogs"
       url: "/articles"
       method: "GET"
       version: "v2"
       description: "获取文章列表"   
     
-    - id: 5
+    - id: 6
       server_name: "blogs"
       url: "/articles/update_status"
       method: "POST"
       version: "v2"
       description: "更新文章状态"   
     
-    - id: 6
+    - id: 7
       server_name: "blogs"
       url: "/articles/search"
       method: "GET"
       version: "v2"
       description: "搜索文章"
     
-    - id: 7
+    - id: 8
       server_name: "blogs"
       url: "/articles/count"
       method: "GET"
       version: "v2"
       description: "获取文章总数目"
     
-    - id: 8
+    - id: 9
       server_name: "blogs"
       url: "/articlesTypes"
       method: "GET"
       version: "v2"
       description: "获取文章类型列表"
     
-    - id: 9
+    - id: 10
       server_name: "blogs"
       url: "/articlesTags"
       method: "GET"
@@ -75,7 +75,7 @@ resources:
 
 
   drug:
-    - id: 10
+    - id: 11
       server_name: "drug"
       url: "/words/random/"
       method: "GET"
@@ -83,21 +83,21 @@ resources:
       description: "随机获取一条毒鸡汤"
 
   fileBroker:
-    - id: 11
+    - id: 12
       server_name: "fileBroker"
       url: "/"
       method: "POST"
       version: "v1"
       description: "文件预信息上传"
 
-    - id: 12
+    - id: 13
       server_name: "fileBroker"
       url: "/search"
       method: "GET"
       version: "v1"
       description: "搜索文件上传的信息"
     
-    - id: 13
+    - id: 14
       server_name: "fileBroker"
       url: "/"
       method: "GET"
@@ -105,21 +105,21 @@ resources:
       description: "下载文件"
 
   dataFaker:
-    - id: 14
+    - id: 15
       server_name: "dataFaker"
       url: "/"
       method: "POST"
       version: "v1"
       description: "假数据生成预数据上传"
     
-    - id: 15
+    - id: 16
       server_name: "dataFaker"
       url: "/search/"
       method: "GET"
       version: "v1"
       description: "根据生成嘛搜索生成的信息"
 
-    - id: 16
+    - id: 17
       server_name: "dataFaker"
       url: "/"
       method: "GET"
@@ -127,14 +127,14 @@ resources:
       description: "根据下载码下载生成的假数据"
 
   shortUrl:
-    - id: 17
+    - id: 18
       server_name: "shortUrl"
       url: "/create/"
       method: "POST"
       version: "v1"
       description: "生成短链接"
 
-    - id: 18
+    - id: 19
       server_name: "shortUrl"
       url: "/redirect/"
       method: "GET"
@@ -142,42 +142,42 @@ resources:
       description: "访问短链接"
   
   apiCollector:
-    - id: 19
+    - id: 20
       server_name: "apiCollector"
       url: "/task/"
       method: "POST"
       version: "v1"
       description: "启动爬取任务"
 
-    - id: 20
+    - id: 21
       server_name: "apiCollector"
       url: "/task/"
       method: "GET"
       version: "v1"
       description: "获取爬取任务列表"
     
-    - id: 21
+    - id: 22
       server_name: "apiCollector"
       url: "/apiInfo"
       method: "GET"
       version: "v1"
       description: "获取所有API信息"
     
-    - id: 22
+    - id: 23
       server_name: "apiCollector"
       url: "/apiInfo/search"
       method: "GET"
       version: "v1"
       description: "获取指定API信息"
 
-    - id: 23
+    - id: 24
       server_name: "apiCollector"
       url: "/apiResource/"
       method: "GET"
       version: "v1"
       description: "获取指定API资源"
 
-    - id: 24
+    - id: 25
       server_name: "apiCollector"
       url: "/apiResource/"
       method: "POST"
@@ -185,7 +185,7 @@ resources:
       description: "创建一个API脚本"
 
 menus: ## 管理后台的菜单权限
-  - id: 0
+  - id: 1
     name: "权限管理"
     url: "/admin/permissions"
     icon: "Lock" # element ui icon
@@ -194,7 +194,7 @@ menus: ## 管理后台的菜单权限
     route_name: "adminPermissions"
     type: 0 # 0: 菜单 1: 按钮
 
-  - id: 1
+  - id: 2
     name: "菜单管理"
     url: "/admin/permissions/menus"
     icon: "Menu" # element ui icon
@@ -203,7 +203,7 @@ menus: ## 管理后台的菜单权限
     route_name: "adminPermissionsMenus"
     type: 0 # 0: 菜单 1: 按钮
 
-  - id: 2
+  - id: 3
     name: "数据库管理"
     url: "/admin/permissions/models"
     icon: "List" # element ui icon
@@ -212,7 +212,7 @@ menus: ## 管理后台的菜单权限
     route_name: "adminPermissionsModelsOp"
     type: 0 # 0: 菜单 1: 按钮
 
-  - id: 3
+  - id: 4
     name: "角色管理"
     url: "/admin/permissions/roles"
     icon: "UserFilled" # element ui icon
@@ -221,7 +221,7 @@ menus: ## 管理后台的菜单权限
     route_name: "adminPermissionsRoles"
     type: 0 # 0: 菜单 1: 按钮
 
-  - id: 4
+  - id: 5
     name: "用户管理"
     url: "/admin/users"
     icon: "User" # element ui icon
@@ -230,7 +230,7 @@ menus: ## 管理后台的菜单权限
     route_name: "adminUserManager"
     type: 0 # 0: 菜单 1: 按钮
 
-  - id: 5
+  - id: 6
     name: "个人档案"
     url: "/admin/profile"
     icon: "User" # element ui icon
@@ -239,12 +239,20 @@ menus: ## 管理后台的菜单权限
     route_name: "UserProfile"
 
 roles:
-  - id: 0
+  - id: 1
     name: "admin"
     description: "超级管理员"
     zone: "site"
   
-  - id: 1
+  - id: 2
     name: "guest"
     description: "游客"
     zone: "site"
+
+
+roles_resources:
+  - role_id: 1
+    resource_id: "*"
+      
+  - role_id: 2
+    resource_id: [1,2,3]
