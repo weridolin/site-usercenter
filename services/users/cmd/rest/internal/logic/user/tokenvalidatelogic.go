@@ -70,10 +70,23 @@ func (l *TokenValidateLogic) HasPermission(userId int, apiPermissionRequired str
 	if err != nil {
 		if err == redis.Nil {
 			resourceList := make([]string, 0)
-			// 从数据库查询对应的权限
-			roles, err := l.svcCtx.RoleModel.Query(map[string]interface{}{"create_user": userId, "zone": "site"}, l.svcCtx.DB)
+			// 先查询用户ID对应的角色
+			userRoles, err := models.UserRoles{}.Query(map[string]interface{}{"user_id": userId}, l.svcCtx.DB)
 			if err != nil {
-				fmt.Println("get permission from db error", err)
+				fmt.Println("get user roles error", err)
+			}
+			fmt.Println("user roles  ---> ", userRoles)
+			var rolesIds []int
+			for _, userRole := range userRoles {
+				rolesIds = append(rolesIds, userRole.RoleId)
+			}
+
+			// 从数据库查询所有角色对应的权限
+			var roles []*models.Role
+			err = l.svcCtx.DB.Where("id IN ?", rolesIds).Preload("Menus").Preload("Resources").Find(&roles).Error
+			fmt.Println(err, roles)
+			if err != nil {
+				fmt.Println("get roles from db error", err)
 			} else {
 				for _, role := range roles {
 					for _, resource := range role.Resources {

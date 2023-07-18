@@ -73,7 +73,6 @@ resources:
       version: "v2"
       description: "获取文章标签列表"
 
-
   drug:
     - id: 11
       server_name: "drug"
@@ -184,6 +183,15 @@ resources:
       version: "v1"
       description: "创建一个API脚本"
 
+  usercenter:
+    - id: 26
+      server_name: "usercenter"
+      url: "/logout"
+      method: "POST"
+      version: "v1"
+      description: "登出接口"
+
+
 menus: ## 管理后台的菜单权限
   - id: 1
     name: "权限管理"
@@ -255,4 +263,8 @@ roles_resources:
     resource_id: "*"
       
   - role_id: 2
-    resource_id: [1,2,3]
+    resource_id: [1,2,3,26]
+
+# user_role:
+#   - user_id: 1
+#     role_id: [1,2]

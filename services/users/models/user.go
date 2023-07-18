@@ -16,7 +16,7 @@ type UserModel interface {
 }
 
 type User struct {
-	gorm.Model
+	BaseModel
 	Username string `gorm:"uniqueIndex;not null;comment:用户名;size:256" json:"username" binding:"alphanum,min=4,max=255" form:"username"`
 	Password string `gorm:"not null;comment:密码" json:"password" binding:"required,min=4,max=255" form:"password"`
 	Email    string `gorm:"comment:邮箱" json:"email" binding:"email" form:"email"`

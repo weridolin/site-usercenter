@@ -7,13 +7,14 @@ import (
 )
 
 type BaseModel struct {
-	ID        uint `gorm:"primarykey" json:"id" yaml:"id"`
+	ID        int `gorm:"primarykey" json:"id" yaml:"id"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 type Role struct {
+	// 设置 uniqueIndex 必须同时设置 NOT NULL
 	BaseModel
 	CreateUser  int         `gorm:"comment:创建者ID" json:"create_user" yaml:"create_user"`
 	Zone        string      `gorm:"uniqueIndex:udx_role;not null;comment:域;size:256;default:site" yaml:"zone" json:"zone"` //角色的作用范围
@@ -30,8 +31,8 @@ func (Role) TableName() string {
 
 type UserRoles struct {
 	BaseModel
-	UserId uint `gorm:"comment:用户ID uniqueIndex:udx_user_roles"`
-	RoleId uint `gorm:"comment:角色ID uniqueIndex:udx_user_roles"`
+	UserId int `gorm:"comment:用户ID;uniqueIndex:udx_user_roles;not null"`
+	RoleId int `gorm:"comment:角色ID;uniqueIndex:udx_user_roles;not null"`
 }
 
 func (UserRoles) TableName() string {
@@ -133,22 +134,22 @@ func (m *Menu) QueryById(condition interface{}, DB *gorm.DB) (*Menu, error) {
 
 type MenuPermission struct {
 	BaseModel
-	MenuId uint `gorm:"comment:菜单ID uniqueIndex:udx_menu_permission"`
-	RoleId uint `gorm:"comment:角色ID uniqueIndex:udx_menu_permission"`
+	MenuId int `gorm:"comment:菜单ID;uniqueIndex:udx_menu_permission;not null"`
+	RoleId int `gorm:"comment:角色ID;uniqueIndex:udx_menu_permission;not null"`
 }
 
 func (MenuPermission) TableName() string {
 	return "auth_menu_permission"
 }
 
-func BindMenuRole(menuId, roleId uint, DB *gorm.DB) error {
+func BindMenuRole(menuId, roleId int, DB *gorm.DB) error {
 	return DB.Create(&MenuPermission{
 		MenuId: menuId,
 		RoleId: roleId,
 	}).Error
 }
 
-func BatchBindMenuRole(MenuIdList []uint, roleId uint, DB *gorm.DB) error {
+func BatchBindMenuRole(MenuIdList []int, roleId int, DB *gorm.DB) error {
 	var list []MenuPermission
 	for _, v := range MenuIdList {
 		list = append(list, MenuPermission{
@@ -207,27 +208,27 @@ func (r *Resource) QueryById(condition interface{}, DB *gorm.DB) (*Resource, err
 
 func (r *Resource) Format() string {
 	// {{servername}}/api/{{version}}/{{url}}:{{method}}
-	return r.ServerName + "/api/" + r.Version + r.Url + ":" + r.Method
+	return "/" + r.ServerName + "/api/" + r.Version + r.Url + ":" + r.Method
 }
 
 type ResourcePermission struct {
 	BaseModel
-	ResourceId uint `gorm:"unique_index:udx_resource_role comment:资源ID" json:"resource_id" yaml:"resource_id"`
-	RoleId     uint `gorm:"unique_index:udx_resource_role comment:角色ID" json:"role_id" yaml:"role_id"`
+	ResourceId int `gorm:"uniqueIndex:udx_resource_role;not null;comment:资源ID" json:"resource_id" yaml:"resource_id"`
+	RoleId     int `gorm:"uniqueIndex:udx_resource_role;not null;comment:角色ID" json:"role_id" yaml:"role_id"`
 }
 
 func (ResourcePermission) TableName() string {
 	return "auth_resource_permission"
 }
 
-func BindResourcePermission(resourceId, roleId uint, DB *gorm.DB) error {
+func BindResourcePermission(resourceId, roleId int, DB *gorm.DB) error {
 	return DB.Create(&ResourcePermission{
 		ResourceId: resourceId,
 		RoleId:     roleId,
 	}).Error
 }
 
-func BatchBindResourcePermission(resourceIdList []uint, roleId uint, DB *gorm.DB) error {
+func BatchBindResourcePermission(resourceIdList []int, roleId int, DB *gorm.DB) error {
 	var list []ResourcePermission
 	for _, v := range resourceIdList {
 		list = append(list, ResourcePermission{

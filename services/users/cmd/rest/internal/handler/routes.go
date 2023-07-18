@@ -44,6 +44,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/token/validate",
 				Handler: user.TokenValidateHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/token/validate",
+				Handler: user.TokenValidateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/token/validate",
+				Handler: user.TokenValidateHandler(serverCtx),
+			},
 		},
 		// rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret), // todo改成接口里面实现验证逻辑
 	)

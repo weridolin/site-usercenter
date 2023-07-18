@@ -3,7 +3,6 @@ package user
 import (
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/logic/user"
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/svc"
@@ -16,8 +15,9 @@ import (
 func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var src_uri = r.Header.Get("X-Original-Request-Uri")
+		var src_method = r.Header.Get("X-Original-Method")
 		// 获取权限API权限表达式
-		permsRequired := tools.FormatPermissionFromUri(src_uri, strings.ToLower(r.Method))
+		permsRequired := tools.FormatPermissionFromUri(src_uri, src_method)
 		fmt.Println("permsRequired:", permsRequired, "src_uri:", src_uri)
 		if src_uri == "/usercenter/api/v1/login" || src_uri == "/usercenter/api/v1/register" {
 			w.WriteHeader(http.StatusOK)

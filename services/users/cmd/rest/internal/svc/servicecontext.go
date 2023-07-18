@@ -61,18 +61,18 @@ func LoadInitData(DB *gorm.DB) {
 		if permission["resource_id"] == "*" {
 			var count int64
 			DB.Model(&models.Resource{}).Count(&count)
-			var resourceList []uint
+			var resourceList []int
 			for i := 1; i <= int(count); i++ {
-				resourceList = append(resourceList, uint(i))
+				resourceList = append(resourceList, i)
 			}
-			err := models.BatchBindResourcePermission(resourceList, uint(permission["role_id"].(int)), DB)
+			err := models.BatchBindResourcePermission(resourceList, permission["role_id"].(int), DB)
 			fmt.Println("err:", err)
 		} else {
 			var list []models.ResourcePermission
 			for _, v := range permission["resource_id"].([]interface{}) {
 				list = append(list, models.ResourcePermission{
-					ResourceId: uint(v.(int)),
-					RoleId:     uint(permission["role_id"].(int)),
+					ResourceId: v.(int),
+					RoleId:     permission["role_id"].(int),
 				})
 			}
 			DB.Create(&list)
