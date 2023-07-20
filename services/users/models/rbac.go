@@ -238,3 +238,23 @@ func BatchBindResourcePermission(resourceIdList []int, roleId int, DB *gorm.DB) 
 	}
 	return DB.Create(&list).Error
 }
+
+func GetUserMenuPermissionByUserID(db *gorm.DB, userId int) ([]*Menu, error) {
+	var menus []*Menu
+	err := db.Table("auth_menu").
+		Joins("left join auth_menu_permission on auth_menu_permission.menu_id = auth_menu.id").
+		Joins("left join user_roles on user_roles.role_id = auth_menu_permission.role_id").
+		Where("user_roles.user_id = ?", userId).
+		Find(&menus).Error
+	return menus, err
+}
+
+func GetUserResourcePermissionByUserID(db *gorm.DB, userId int) ([]*Resource, error) {
+	var resources []*Resource
+	err := db.Table("auth_resource").
+		Joins("left join auth_resource_permission on auth_resource_permission.resource_id = auth_resource.id").
+		Joins("left join user_roles on user_roles.role_id = auth_resource_permission.role_id").
+		Where("user_roles.user_id = ?", userId).
+		Find(&resources).Error
+	return resources, err
+}
