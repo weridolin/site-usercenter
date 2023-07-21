@@ -1,6 +1,7 @@
 package svc
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path"
@@ -76,6 +77,16 @@ func LoadInitData(DB *gorm.DB) {
 				})
 			}
 			DB.Create(&list)
+		}
+	}
+
+	// 缓存权限资源是否需要鉴权到redis,这里不放在内存是为了多个节点饿情况下不用去做同步
+	redis_client := tools.NewRedisClient()
+	for _, resources := range defaultData.Resources {
+		for _, resource := range resources {
+			ctx := context.TODO()
+			res := redis_client.Set(ctx, tools.ResourceAuthenticatedCacheKey(resource.Format()), resource.Authenticated, 0)
+			fmt.Printf("set resource auth cache → %+v  result →  %+v \n", resource.Format(), res)
 		}
 	}
 }

@@ -47,7 +47,8 @@ func (l *TokenValidateLogic) TokenValidate(req *types.ValidateTokenReq, apiPermi
 		return nil, xerrors.New(http.StatusForbidden, "user has no permission")
 	}
 	return &types.ValidateResp{
-		UserId: fmt.Sprintf("%v", userID.(float64)),
+		UserId:       fmt.Sprintf("%v", userID.(float64)),
+		IsSuperAdmin: claims["superAdmin"].(bool),
 	}, nil
 }
 

@@ -7,7 +7,6 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.14.1
 	github.com/gofrs/uuid v4.4.0+incompatible
-	github.com/joho/godotenv v1.5.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/redis/go-redis/v9 v9.0.5
 	github.com/zeromicro/go-zero v1.5.3

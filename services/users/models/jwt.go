@@ -16,7 +16,8 @@ func GenToken(user User, key string) string {
 		"exp": time.Now().Add(time.Hour * 24 * 7).Unix(),
 		// "roles": roles,
 		// "menus":    menus,
-		"username": user.Username,
+		"username":   user.Username,
+		"superAdmin": user.IsSuperAdmin,
 	}
 	// Sign and get the complete encoded token as a string
 	token, err := jwt_token.SignedString([]byte(key))

@@ -163,24 +163,26 @@ func BatchBindMenuRole(MenuIdList []int, roleId int, DB *gorm.DB) error {
 // 资源api鉴权
 type Resource struct {
 	BaseModel
-	ServerName  string `gorm:"uniqueIndex:udx_resource;not null;comment:服务名;size:256" json:"server_name" yaml:"server_name"`
-	Url         string `gorm:"uniqueIndex:udx_resource;not null;comment:资源路径;size:256" json:"url" yaml:"url"`
-	Method      string `gorm:"uniqueIndex:udx_resource;not null;comment:资源方法 ;set(GET,POST,PUT,DELETE);size:256" json:"method" yaml:"method"`
-	Version     string `gorm:"comment:资源版本;size:256" json:"version" yaml:"version"`
-	Description string `gorm:"comment:资源描述;size:256" json:"description" yaml:"description" `
+	ServerName    string `gorm:"uniqueIndex:udx_resource;not null;comment:服务名;size:256" json:"server_name" yaml:"server_name"`
+	Url           string `gorm:"uniqueIndex:udx_resource;not null;comment:资源路径;size:256" json:"url" yaml:"url"`
+	Method        string `gorm:"uniqueIndex:udx_resource;not null;comment:资源方法 ;set(GET,POST,PUT,DELETE);size:256" json:"method" yaml:"method"`
+	Version       string `gorm:"comment:资源版本;size:256" json:"version" yaml:"version"`
+	Description   string `gorm:"comment:资源描述;size:256" json:"description" yaml:"description" `
+	Authenticated bool   `gorm:"comment:是否需要鉴权;default:false" json:"authenticated" yaml:"authenticated" `
 }
 
 func (Resource) TableName() string {
 	return "auth_resource"
 }
 
-func (r *Resource) Create(serverName, url, method, version, description string, DB *gorm.DB) (*Resource, error) {
+func (r *Resource) Create(serverName, url, method, version, description string, authenticated bool, DB *gorm.DB) (*Resource, error) {
 	new := Resource{
-		ServerName:  serverName,
-		Url:         url,
-		Method:      method,
-		Version:     version,
-		Description: description,
+		ServerName:    serverName,
+		Url:           url,
+		Method:        method,
+		Version:       version,
+		Description:   description,
+		Authenticated: authenticated,
 	}
 	err := DB.Create(&new).Error
 	return &new, err

@@ -75,7 +75,7 @@ type RefreshTokenResp struct {
 
 type ValidateResp struct {
 	UserId string `json:"user_id"`
-
+	IsSuperAdmin bool `json:"is_super_admin"`
 }
 
 type ValidateTokenReq struct {

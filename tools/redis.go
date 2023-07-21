@@ -12,7 +12,7 @@ func NewRedisClient() *redis.Client {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("redis url:", opt)
+	// fmt.Println("redis url:", opt)
 	rdb := redis.NewClient(opt)
 	return rdb
 }
@@ -23,4 +23,8 @@ func InvalidTokenKey(token string) string {
 
 func UserPermissionKey(userID int) string {
 	return "permission" + ":" + fmt.Sprintf("%d", userID)
+}
+
+func ResourceAuthenticatedCacheKey(resource string) string {
+	return "resource_authenticated" + ":" + resource
 }

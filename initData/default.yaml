@@ -8,6 +8,7 @@ resources:
       method: "GET"
       version: "v1"
       description: "网站评论"
+      authenticated: false
 
     - id: 2
       server_name: "home"
@@ -15,6 +16,8 @@ resources:
       method: "GET"
       version: "v1"
       description: "友链"
+      authenticated: false
+
 
     - id: 3
       server_name: "home"
@@ -22,6 +25,8 @@ resources:
       method: "GET"
       version: "v1"
       description: "更新日志"
+      authenticated: false
+
   
   blogs:
     - id: 4
@@ -30,6 +35,8 @@ resources:
       method: "GET"
       version: "v2"
       description: "获取文章详情"    
+      authenticated: false
+
 
     - id: 5
       server_name: "blogs"
@@ -37,13 +44,17 @@ resources:
       method: "GET"
       version: "v2"
       description: "获取文章列表"   
+      authenticated: false
     
+
     - id: 6
       server_name: "blogs"
       url: "/articles/update_status"
       method: "POST"
       version: "v2"
-      description: "更新文章状态"   
+      description: "更新文章状态"  
+      authenticated: true
+
     
     - id: 7
       server_name: "blogs"
@@ -51,6 +62,8 @@ resources:
       method: "GET"
       version: "v2"
       description: "搜索文章"
+      authenticated: false
+      
     
     - id: 8
       server_name: "blogs"
@@ -58,6 +71,8 @@ resources:
       method: "GET"
       version: "v2"
       description: "获取文章总数目"
+      authenticated: false
+ 
     
     - id: 9
       server_name: "blogs"
@@ -65,13 +80,16 @@ resources:
       method: "GET"
       version: "v2"
       description: "获取文章类型列表"
-    
+      authenticated: false
+  
+
     - id: 10
       server_name: "blogs"
       url: "/articlesTags"
       method: "GET"
       version: "v2"
       description: "获取文章标签列表"
+      authenticated: false
 
   drug:
     - id: 11
@@ -80,6 +98,8 @@ resources:
       method: "GET"
       version: "v1"
       description: "随机获取一条毒鸡汤"
+      authenticated: false
+
 
   fileBroker:
     - id: 12
@@ -88,6 +108,7 @@ resources:
       method: "POST"
       version: "v1"
       description: "文件预信息上传"
+      authenticated: false
 
     - id: 13
       server_name: "fileBroker"
@@ -95,6 +116,8 @@ resources:
       method: "GET"
       version: "v1"
       description: "搜索文件上传的信息"
+      authenticated: false
+
     
     - id: 14
       server_name: "fileBroker"
@@ -102,6 +125,8 @@ resources:
       method: "GET"
       version: "v1"
       description: "下载文件"
+      authenticated: false
+
 
   dataFaker:
     - id: 15
@@ -110,13 +135,17 @@ resources:
       method: "POST"
       version: "v1"
       description: "假数据生成预数据上传"
-    
+      authenticated: false
+
+
     - id: 16
       server_name: "dataFaker"
       url: "/search/"
       method: "GET"
       version: "v1"
       description: "根据生成嘛搜索生成的信息"
+      authenticated: false
+
 
     - id: 17
       server_name: "dataFaker"
@@ -124,6 +153,8 @@ resources:
       method: "GET"
       version: "v1"
       description: "根据下载码下载生成的假数据"
+      authenticated: false
+
 
   shortUrl:
     - id: 18
@@ -132,6 +163,8 @@ resources:
       method: "POST"
       version: "v1"
       description: "生成短链接"
+      authenticated: false
+
 
     - id: 19
       server_name: "shortUrl"
@@ -139,7 +172,9 @@ resources:
       method: "GET"
       version: "v1"
       description: "访问短链接"
-  
+      authenticated: false
+
+
   apiCollector:
     - id: 20
       server_name: "apiCollector"
@@ -147,6 +182,8 @@ resources:
       method: "POST"
       version: "v1"
       description: "启动爬取任务"
+      authenticated: true
+
 
     - id: 21
       server_name: "apiCollector"
@@ -154,20 +191,26 @@ resources:
       method: "GET"
       version: "v1"
       description: "获取爬取任务列表"
-    
+      authenticated: true
+
+
     - id: 22
       server_name: "apiCollector"
       url: "/apiInfo"
       method: "GET"
       version: "v1"
       description: "获取所有API信息"
-    
+      authenticated: false
+
+
     - id: 23
       server_name: "apiCollector"
       url: "/apiInfo/search"
       method: "GET"
       version: "v1"
       description: "获取指定API信息"
+      authenticated: false
+
 
     - id: 24
       server_name: "apiCollector"
@@ -175,6 +218,8 @@ resources:
       method: "GET"
       version: "v1"
       description: "获取指定API资源"
+      authenticated: true
+
 
     - id: 25
       server_name: "apiCollector"
@@ -182,14 +227,34 @@ resources:
       method: "POST"
       version: "v1"
       description: "创建一个API脚本"
+      authenticated: true
+
 
   usercenter:
+
     - id: 26
       server_name: "usercenter"
       url: "/logout"
       method: "POST"
       version: "v1"
       description: "登出接口"
+      authenticated: true
+
+    - id: 27
+      server_name: "usercenter"
+      url: "/login"
+      method: "POST"
+      version: "v1"
+      description: "登录接口"
+      authenticated: false
+
+    - id: 28
+      server_name: "usercenter"
+      url: "/register"
+      method: "POST"
+      version: "v1"
+      description: "注册接口"
+      authenticated: false
 
 
 menus: ## 管理后台的菜单权限

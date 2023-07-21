@@ -1,9 +1,10 @@
 package user
 
 import (
-	"fmt"
 	"net/http"
+	"strconv"
 
+	"github.com/redis/go-redis/v9"
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/logic/user"
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/svc"
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/types"
@@ -18,10 +19,20 @@ func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		var src_method = r.Header.Get("X-Original-Method")
 		// 获取权限API权限表达式
 		permsRequired := tools.FormatPermissionFromUri(src_uri, src_method)
-		fmt.Println("permsRequired:", permsRequired, "src_uri:", src_uri)
-		if src_uri == "/usercenter/api/v1/login" || src_uri == "/usercenter/api/v1/register" {
-			w.WriteHeader(http.StatusOK)
-			return
+
+		// 判断api是否需要鉴权
+		val, err := svcCtx.RedisClient.Get(r.Context(), tools.ResourceAuthenticatedCacheKey(permsRequired)).Result()
+		if err == redis.Nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else if err != nil {
+			panic(err)
+		} else {
+			if val == "0" {
+				// 不需要鉴权
+				w.WriteHeader(http.StatusOK)
+				return
+			}
 		}
 		var req types.ValidateTokenReq
 		if err := httpx.Parse(r, &req); err != nil {
@@ -36,6 +47,7 @@ func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
 			w.Header().Set("X-Forwarded-User", resp.UserId)
+			w.Header().Set("X-Super-Admin", strconv.FormatBool(resp.IsSuperAdmin))
 			httpx.OkJsonCtx(r.Context(), w, resp)
 		}
 	}
