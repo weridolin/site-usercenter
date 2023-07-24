@@ -1,4 +1,4 @@
-Name: users
+Name: usercenter.rest
 Host: 0.0.0.0
 Port: 8080
 JwtAuth:
@@ -14,6 +14,12 @@ Logger:
   ServiceName: users-rest-api
   MODE: console
   Encoding: plain
+
+## 服务注册
+Etcd:
+  Hosts:
+  - etcd:2379
+  Key: /site/withauth/usercenter/rest
 
 #监控
 # Prometheus:

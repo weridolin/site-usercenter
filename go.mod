@@ -11,6 +11,8 @@ require (
 	github.com/redis/go-redis/v9 v9.0.5
 	github.com/zeromicro/go-zero v1.5.3
 	github.com/zeromicro/x v0.0.0-20230424055333-01c7fb9548d4
+	go.etcd.io/etcd/api/v3 v3.5.9
+	go.etcd.io/etcd/client/v3 v3.5.9
 	google.golang.org/grpc v1.55.0
 	google.golang.org/protobuf v1.30.0
 	gopkg.in/yaml.v2 v2.4.0
@@ -73,9 +75,7 @@ require (
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
-	go.etcd.io/etcd/api/v3 v3.5.9 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.9 // indirect
-	go.etcd.io/etcd/client/v3 v3.5.9 // indirect
 	go.opentelemetry.io/otel v1.14.0 // indirect
 	go.opentelemetry.io/otel/exporters/jaeger v1.14.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/internal/retry v1.14.0 // indirect

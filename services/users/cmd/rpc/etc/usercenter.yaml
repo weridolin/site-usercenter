@@ -1,9 +1,11 @@
 Name: usercenter.rpc
-ListenOn: 0.0.0.0:8080
+ListenOn: 0.0.0.0:8081
 Etcd:
   Hosts:
-  - 127.0.0.1:2379
+  - http://etcd:2379
   Key: usercenter.rpc
+  InsecureSkipVerify: true
+
 DBUri: "root:werido@tcp(8.131.78.84:3306)/sitebackend?charset=utf8mb4&parseTime=true"
 JwtAuth:
   AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
