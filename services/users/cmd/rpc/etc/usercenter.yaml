@@ -2,7 +2,7 @@ Name: usercenter.rpc
 ListenOn: 0.0.0.0:8081
 Etcd:
   Hosts:
-  - http://etcd:2379
+  - http://etcd1:2379
   Key: usercenter.rpc
   InsecureSkipVerify: true
 
