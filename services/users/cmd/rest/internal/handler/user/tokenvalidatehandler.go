@@ -1,6 +1,7 @@
 package user
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -19,10 +20,12 @@ func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		var src_method = r.Header.Get("X-Original-Method")
 		// 获取权限API权限表达式
 		permsRequired := tools.FormatPermissionFromUri(src_uri, src_method)
-
+		fmt.Println("permsRequired:", permsRequired)
 		// 判断api是否需要鉴权
+		fmt.Println(tools.ResourceAuthenticatedCacheKey(permsRequired), ">>>")
 		val, err := svcCtx.RedisClient.Get(r.Context(), tools.ResourceAuthenticatedCacheKey(permsRequired)).Result()
 		if err == redis.Nil {
+			// TODO 查不到接口权限，在查下数据库
 			w.WriteHeader(http.StatusUnauthorized)
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else if err != nil {
@@ -30,6 +33,7 @@ func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		} else {
 			if val == "0" {
 				// 不需要鉴权
+				fmt.Println("api不需要鉴权 -> ", src_uri, ":", src_method)
 				w.WriteHeader(http.StatusOK)
 				return
 			}
@@ -48,6 +52,7 @@ func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		} else {
 			w.Header().Set("X-Forwarded-User", resp.UserId)
 			w.Header().Set("X-Super-Admin", strconv.FormatBool(resp.IsSuperAdmin))
+			fmt.Println("response header", w.Header())
 			httpx.OkJsonCtx(r.Context(), w, resp)
 		}
 	}

@@ -1,6 +1,7 @@
 package user
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/logic/user"
@@ -16,7 +17,7 @@ func TokenRefreshHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
-
+		fmt.Println("req:", r.Header)
 		l := user.NewTokenRefreshLogic(r.Context(), svcCtx)
 		resp, err := l.TokenRefresh(&req)
 		if err != nil {

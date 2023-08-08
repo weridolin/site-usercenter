@@ -27,6 +27,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/logout",
 				Handler: user.LogoutHandler(serverCtx),
+			},			
+			{
+				Method:  http.MethodPost,
+				Path:    "/token/refresh",
+				Handler: user.TokenRefreshHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/usercenter/api/v1"),
@@ -34,11 +39,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/token/refresh",
-				Handler: user.TokenRefreshHandler(serverCtx),
-			},
+
 			{
 				Method:  http.MethodGet,
 				Path:    "/token/validate",
@@ -55,6 +56,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: user.TokenValidateHandler(serverCtx),
 			},
 		},
-		// rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret), // todo改成接口里面实现验证逻辑
+		// rest.WithPrefix("/usercenter/api/v1"),
 	)
 }

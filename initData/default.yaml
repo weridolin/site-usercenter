@@ -27,10 +27,18 @@ resources:
       description: "更新日志"
       authenticated: false
 
-  
-  blogs:
     - id: 4
-      server_name: "blogs"
+      server_name: "home"
+      url: "/comments"
+      method: "POST"
+      version: "v1"
+      description: "提交网站评论"
+      authenticated: true      
+
+  
+  blog:
+    - id: 4
+      server_name: "blog"
       url: "/articles/<num:int>"
       method: "GET"
       version: "v2"
@@ -39,7 +47,7 @@ resources:
 
 
     - id: 5
-      server_name: "blogs"
+      server_name: "blog"
       url: "/articles"
       method: "GET"
       version: "v2"
@@ -48,7 +56,7 @@ resources:
     
 
     - id: 6
-      server_name: "blogs"
+      server_name: "blog"
       url: "/articles/update_status"
       method: "POST"
       version: "v2"
@@ -57,7 +65,7 @@ resources:
 
     
     - id: 7
-      server_name: "blogs"
+      server_name: "blog"
       url: "/articles/search"
       method: "GET"
       version: "v2"
@@ -66,7 +74,7 @@ resources:
       
     
     - id: 8
-      server_name: "blogs"
+      server_name: "blog"
       url: "/articles/count"
       method: "GET"
       version: "v2"
@@ -75,7 +83,7 @@ resources:
  
     
     - id: 9
-      server_name: "blogs"
+      server_name: "blog"
       url: "/articlesTypes"
       method: "GET"
       version: "v2"
@@ -84,7 +92,7 @@ resources:
   
 
     - id: 10
-      server_name: "blogs"
+      server_name: "blog"
       url: "/articlesTags"
       method: "GET"
       version: "v2"
@@ -255,6 +263,22 @@ resources:
       version: "v1"
       description: "注册接口"
       authenticated: false
+
+    - id: 29
+      server_name: "usercenter"
+      url: "/profile"
+      method: "GET"
+      version: "v1"
+      description: "获取用户信息"
+      authenticated: true
+    
+    - id: 30
+      server_name: "usercenter"
+      url: "/token/refresh"
+      method: "POST"
+      version: "v1"
+      description: "刷新TOKEN"
+      authenticated: true
 
 
 menus: ## 管理后台的菜单权限
