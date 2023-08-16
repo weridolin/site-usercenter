@@ -11,10 +11,9 @@ import (
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/handler"
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/svc"
 	"github.com/weridolin/site-gateway/tools"
-	"go.etcd.io/etcd/api/v3/v3rpc/rpctypes"
-
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
+	"go.etcd.io/etcd/api/v3/v3rpc/rpctypes"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
@@ -81,7 +80,6 @@ func RegisterServiceToETCD(conf *config.Config) {
 func main() {
 	// fmt.Println("DB_URI", os.Getenv("DB_URI"))
 	flag.Parse()
-
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 

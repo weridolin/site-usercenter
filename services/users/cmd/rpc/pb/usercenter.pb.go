@@ -650,6 +650,100 @@ func (x *TokenValidateResp) GetIsValid() bool {
 	return false
 }
 
+type GetMutipleUserInfoReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserIds []int64 `protobuf:"varint,1,rep,packed,name=userIds,proto3" json:"userIds,omitempty"`
+}
+
+func (x *GetMutipleUserInfoReq) Reset() {
+	*x = GetMutipleUserInfoReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_usercenter_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetMutipleUserInfoReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMutipleUserInfoReq) ProtoMessage() {}
+
+func (x *GetMutipleUserInfoReq) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_usercenter_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMutipleUserInfoReq.ProtoReflect.Descriptor instead.
+func (*GetMutipleUserInfoReq) Descriptor() ([]byte, []int) {
+	return file_pb_usercenter_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetMutipleUserInfoReq) GetUserIds() []int64 {
+	if x != nil {
+		return x.UserIds
+	}
+	return nil
+}
+
+type GetMutipleUserInfoResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserInfos []*GetUserInfoResp `protobuf:"bytes,1,rep,name=userInfos,proto3" json:"userInfos,omitempty"`
+}
+
+func (x *GetMutipleUserInfoResp) Reset() {
+	*x = GetMutipleUserInfoResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_usercenter_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetMutipleUserInfoResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMutipleUserInfoResp) ProtoMessage() {}
+
+func (x *GetMutipleUserInfoResp) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_usercenter_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMutipleUserInfoResp.ProtoReflect.Descriptor instead.
+func (*GetMutipleUserInfoResp) Descriptor() ([]byte, []int) {
+	return file_pb_usercenter_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetMutipleUserInfoResp) GetUserInfos() []*GetUserInfoResp {
+	if x != nil {
+		return x.UserInfos
+	}
+	return nil
+}
+
 var File_pb_usercenter_proto protoreflect.FileDescriptor
 
 var file_pb_usercenter_proto_rawDesc = []byte{
@@ -725,7 +819,15 @@ var file_pb_usercenter_proto_rawDesc = []byte{
 	0x28, 0x09, 0x52, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x2d, 0x0a, 0x11, 0x54, 0x6f, 0x6b,
 	0x65, 0x6e, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x18,
 	0x0a, 0x07, 0x69, 0x73, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52,
-	0x07, 0x69, 0x73, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x32, 0xba, 0x02, 0x0a, 0x0a, 0x75, 0x73, 0x65,
+	0x07, 0x69, 0x73, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x22, 0x31, 0x0a, 0x15, 0x47, 0x65, 0x74, 0x4d,
+	0x75, 0x74, 0x69, 0x70, 0x6c, 0x65, 0x55, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65,
+	0x71, 0x12, 0x18, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x03, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x73, 0x22, 0x4b, 0x0a, 0x16, 0x47,
+	0x65, 0x74, 0x4d, 0x75, 0x74, 0x69, 0x70, 0x6c, 0x65, 0x55, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x66,
+	0x6f, 0x52, 0x65, 0x73, 0x70, 0x12, 0x31, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x66,
+	0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65,
+	0x74, 0x55, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x52, 0x09, 0x75,
+	0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x32, 0x87, 0x03, 0x0a, 0x0a, 0x75, 0x73, 0x65,
 	0x72, 0x63, 0x65, 0x6e, 0x74, 0x65, 0x72, 0x12, 0x36, 0x0a, 0x0b, 0x67, 0x65, 0x74, 0x55, 0x73,
 	0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x55,
 	0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x1a, 0x13, 0x2e, 0x70, 0x62, 0x2e,
@@ -745,8 +847,13 @@ var file_pb_usercenter_proto_rawDesc = []byte{
 	0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x12, 0x14, 0x2e, 0x70, 0x62, 0x2e, 0x54, 0x6f,
 	0x6b, 0x65, 0x6e, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x15,
 	0x2e, 0x70, 0x62, 0x2e, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74,
-	0x65, 0x52, 0x65, 0x73, 0x70, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x4b, 0x0a, 0x12, 0x67, 0x65, 0x74, 0x4d, 0x75, 0x74, 0x69,
+	0x70, 0x6c, 0x65, 0x55, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x19, 0x2e, 0x70, 0x62,
+	0x2e, 0x47, 0x65, 0x74, 0x4d, 0x75, 0x74, 0x69, 0x70, 0x6c, 0x65, 0x55, 0x73, 0x65, 0x72, 0x49,
+	0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x1a, 0x1a, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x4d,
+	0x75, 0x74, 0x69, 0x70, 0x6c, 0x65, 0x55, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65,
+	0x73, 0x70, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -761,7 +868,7 @@ func file_pb_usercenter_proto_rawDescGZIP() []byte {
 	return file_pb_usercenter_proto_rawDescData
 }
 
-var file_pb_usercenter_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_pb_usercenter_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_pb_usercenter_proto_goTypes = []interface{}{
 	(*GetUserInfoReq)(nil),                // 0: pb.GetUserInfoReq
 	(*GetUserInfoResp)(nil),               // 1: pb.GetUserInfoResp
@@ -773,23 +880,28 @@ var file_pb_usercenter_proto_goTypes = []interface{}{
 	(*GetUserMenuPermissionResp)(nil),     // 7: pb.GetUserMenuPermissionResp
 	(*TokenValidateReq)(nil),              // 8: pb.TokenValidateReq
 	(*TokenValidateResp)(nil),             // 9: pb.TokenValidateResp
+	(*GetMutipleUserInfoReq)(nil),         // 10: pb.GetMutipleUserInfoReq
+	(*GetMutipleUserInfoResp)(nil),        // 11: pb.GetMutipleUserInfoResp
 }
 var file_pb_usercenter_proto_depIdxs = []int32{
-	3, // 0: pb.GetUserResourcePermissionResp.resourcePermissions:type_name -> pb.ResourcePermissions
-	6, // 1: pb.GetUserMenuPermissionResp.menuPermissions:type_name -> pb.MenuPermissions
-	0, // 2: pb.usercenter.getUserInfo:input_type -> pb.GetUserInfoReq
-	2, // 3: pb.usercenter.getUserResourcePermission:input_type -> pb.GetUserResourcePermissionReq
-	5, // 4: pb.usercenter.getUserMenuPermission:input_type -> pb.GetUserMenuPermissionReq
-	8, // 5: pb.usercenter.tokenValidate:input_type -> pb.TokenValidateReq
-	1, // 6: pb.usercenter.getUserInfo:output_type -> pb.GetUserInfoResp
-	4, // 7: pb.usercenter.getUserResourcePermission:output_type -> pb.GetUserResourcePermissionResp
-	7, // 8: pb.usercenter.getUserMenuPermission:output_type -> pb.GetUserMenuPermissionResp
-	9, // 9: pb.usercenter.tokenValidate:output_type -> pb.TokenValidateResp
-	6, // [6:10] is the sub-list for method output_type
-	2, // [2:6] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	3,  // 0: pb.GetUserResourcePermissionResp.resourcePermissions:type_name -> pb.ResourcePermissions
+	6,  // 1: pb.GetUserMenuPermissionResp.menuPermissions:type_name -> pb.MenuPermissions
+	1,  // 2: pb.GetMutipleUserInfoResp.userInfos:type_name -> pb.GetUserInfoResp
+	0,  // 3: pb.usercenter.getUserInfo:input_type -> pb.GetUserInfoReq
+	2,  // 4: pb.usercenter.getUserResourcePermission:input_type -> pb.GetUserResourcePermissionReq
+	5,  // 5: pb.usercenter.getUserMenuPermission:input_type -> pb.GetUserMenuPermissionReq
+	8,  // 6: pb.usercenter.tokenValidate:input_type -> pb.TokenValidateReq
+	10, // 7: pb.usercenter.getMutipleUserInfo:input_type -> pb.GetMutipleUserInfoReq
+	1,  // 8: pb.usercenter.getUserInfo:output_type -> pb.GetUserInfoResp
+	4,  // 9: pb.usercenter.getUserResourcePermission:output_type -> pb.GetUserResourcePermissionResp
+	7,  // 10: pb.usercenter.getUserMenuPermission:output_type -> pb.GetUserMenuPermissionResp
+	9,  // 11: pb.usercenter.tokenValidate:output_type -> pb.TokenValidateResp
+	11, // 12: pb.usercenter.getMutipleUserInfo:output_type -> pb.GetMutipleUserInfoResp
+	8,  // [8:13] is the sub-list for method output_type
+	3,  // [3:8] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_pb_usercenter_proto_init() }
@@ -918,6 +1030,30 @@ func file_pb_usercenter_proto_init() {
 				return nil
 			}
 		}
+		file_pb_usercenter_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetMutipleUserInfoReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_usercenter_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetMutipleUserInfoResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -925,7 +1061,7 @@ func file_pb_usercenter_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_pb_usercenter_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -25,6 +25,8 @@ func UserPermissionKey(userID int) string {
 	return "permission" + ":" + fmt.Sprintf("%d", userID)
 }
 
-func ResourceAuthenticatedCacheKey(resource string) string {
-	return "resource_authenticated" + ":" + resource
-}
+// func ResourceAuthenticatedCacheKey(resource string) string {
+// 	return "resource_authenticated" + ":" + resource
+// }
+
+const ResourceAuthenticatedCacheKey = "site:resource_authenticated"

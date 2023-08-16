@@ -23,6 +23,7 @@ const (
 	Usercenter_GetUserResourcePermission_FullMethodName = "/pb.usercenter/getUserResourcePermission"
 	Usercenter_GetUserMenuPermission_FullMethodName     = "/pb.usercenter/getUserMenuPermission"
 	Usercenter_TokenValidate_FullMethodName             = "/pb.usercenter/tokenValidate"
+	Usercenter_GetMutipleUserInfo_FullMethodName        = "/pb.usercenter/getMutipleUserInfo"
 )
 
 // UsercenterClient is the client API for Usercenter service.
@@ -33,6 +34,7 @@ type UsercenterClient interface {
 	GetUserResourcePermission(ctx context.Context, in *GetUserResourcePermissionReq, opts ...grpc.CallOption) (*GetUserResourcePermissionResp, error)
 	GetUserMenuPermission(ctx context.Context, in *GetUserMenuPermissionReq, opts ...grpc.CallOption) (*GetUserMenuPermissionResp, error)
 	TokenValidate(ctx context.Context, in *TokenValidateReq, opts ...grpc.CallOption) (*TokenValidateResp, error)
+	GetMutipleUserInfo(ctx context.Context, in *GetMutipleUserInfoReq, opts ...grpc.CallOption) (*GetMutipleUserInfoResp, error)
 }
 
 type usercenterClient struct {
@@ -79,6 +81,15 @@ func (c *usercenterClient) TokenValidate(ctx context.Context, in *TokenValidateR
 	return out, nil
 }
 
+func (c *usercenterClient) GetMutipleUserInfo(ctx context.Context, in *GetMutipleUserInfoReq, opts ...grpc.CallOption) (*GetMutipleUserInfoResp, error) {
+	out := new(GetMutipleUserInfoResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetMutipleUserInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UsercenterServer is the server API for Usercenter service.
 // All implementations must embed UnimplementedUsercenterServer
 // for forward compatibility
@@ -87,6 +98,7 @@ type UsercenterServer interface {
 	GetUserResourcePermission(context.Context, *GetUserResourcePermissionReq) (*GetUserResourcePermissionResp, error)
 	GetUserMenuPermission(context.Context, *GetUserMenuPermissionReq) (*GetUserMenuPermissionResp, error)
 	TokenValidate(context.Context, *TokenValidateReq) (*TokenValidateResp, error)
+	GetMutipleUserInfo(context.Context, *GetMutipleUserInfoReq) (*GetMutipleUserInfoResp, error)
 	mustEmbedUnimplementedUsercenterServer()
 }
 
@@ -105,6 +117,9 @@ func (UnimplementedUsercenterServer) GetUserMenuPermission(context.Context, *Get
 }
 func (UnimplementedUsercenterServer) TokenValidate(context.Context, *TokenValidateReq) (*TokenValidateResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TokenValidate not implemented")
+}
+func (UnimplementedUsercenterServer) GetMutipleUserInfo(context.Context, *GetMutipleUserInfoReq) (*GetMutipleUserInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMutipleUserInfo not implemented")
 }
 func (UnimplementedUsercenterServer) mustEmbedUnimplementedUsercenterServer() {}
 
@@ -191,6 +206,24 @@ func _Usercenter_TokenValidate_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Usercenter_GetMutipleUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMutipleUserInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).GetMutipleUserInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_GetMutipleUserInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).GetMutipleUserInfo(ctx, req.(*GetMutipleUserInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Usercenter_ServiceDesc is the grpc.ServiceDesc for Usercenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -213,6 +246,10 @@ var Usercenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "tokenValidate",
 			Handler:    _Usercenter_TokenValidate_Handler,
+		},
+		{
+			MethodName: "getMutipleUserInfo",
+			Handler:    _Usercenter_GetMutipleUserInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

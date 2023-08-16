@@ -46,6 +46,7 @@ func (l *TokenValidateLogic) TokenValidate(req *types.ValidateTokenReq, apiPermi
 	if !l.HasPermission(int(userID.(float64)), apiPermissionRequired) {
 		return nil, xerrors.New(http.StatusForbidden, "user has no permission")
 	}
+	fmt.Println("user has permission --->", apiPermissionRequired)
 	return &types.ValidateResp{
 		UserId:       fmt.Sprintf("%v", userID.(float64)),
 		IsSuperAdmin: claims["superAdmin"].(bool),
@@ -91,7 +92,8 @@ func (l *TokenValidateLogic) HasPermission(userId int, apiPermissionRequired str
 			} else {
 				for _, role := range roles {
 					for _, resource := range role.Resources {
-						if apiPermissionRequired == resource.Format() {
+						// 支持正则匹配
+						if tools.MatchRegex(resource.Format(), apiPermissionRequired) {
 							res = true
 						}
 						resourceList = append(resourceList, resource.Format())
@@ -110,7 +112,13 @@ func (l *TokenValidateLogic) HasPermission(userId int, apiPermissionRequired str
 		var permission []string
 		json.Unmarshal([]byte(val), &permission)
 		for _, p := range permission {
-			if p == apiPermissionRequired {
+			//支持正则匹配的方式
+			// if p == apiPermissionRequired {
+			// 	res = true
+			// 	break
+			// }\
+			if tools.MatchRegex(p, apiPermissionRequired) {
+				fmt.Println("match regex", p, apiPermissionRequired)
 				res = true
 				break
 			}

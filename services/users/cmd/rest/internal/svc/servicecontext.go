@@ -2,6 +2,7 @@ package svc
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"os"
 	"path"
@@ -80,15 +81,29 @@ func LoadInitData(DB *gorm.DB) {
 		}
 	}
 
-	// 缓存权限资源是否需要鉴权到redis,这里不放在内存是为了多个节点饿情况下不用去做同步
+	// 缓存权限资源是否需要鉴权到redis,这里不放在内存是为了多个节点情况下不用去做同步
 	redis_client := tools.NewRedisClient()
+	var resourceCacheData []tools.ResourceAuthenticatedItem
+	// resourceListJson, _ := json.Marshal(defaultData.Resources)
+	// ctx := context.TODO()
+	// res := redis_client.Set(ctx, tools.ResourceAuthenticatedCacheKey, resourceListJson, 0)
+	// fmt.Printf("set resource auth cache → %+v  result →  %+v \n", resourceListJson, res)
 	for _, resources := range defaultData.Resources {
 		for _, resource := range resources {
-			ctx := context.TODO()
-			res := redis_client.Set(ctx, tools.ResourceAuthenticatedCacheKey(resource.Format()), resource.Authenticated, 0)
-			fmt.Printf("set resource auth cache → %+v  result →  %+v \n", resource.Format(), res)
+			// ctx := context.TODO()
+			// res := redis_client.Set(ctx, tools.ResourceAuthenticatedCacheKey, resource.Authenticated, 0)
+			// fmt.Printf("set resource auth cache → %+v  result →  %+v \n", resource.Format(), res)
+			resourceCacheData = append(resourceCacheData, tools.ResourceAuthenticatedItem{
+				Resource:      resource.Format(),
+				Authenticated: resource.Authenticated,
+			})
 		}
 	}
+	resourceListJson, _ := json.Marshal(resourceCacheData)
+	ctx := context.TODO()
+	res := redis_client.Set(ctx, tools.ResourceAuthenticatedCacheKey, resourceListJson, 0)
+	fmt.Printf("set resource auth cache → %+v  result →  %+v \n", resourceCacheData, res)
+
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {

@@ -1,6 +1,7 @@
 package user
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -22,8 +23,8 @@ func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		permsRequired := tools.FormatPermissionFromUri(src_uri, src_method)
 		fmt.Println("permsRequired:", permsRequired)
 		// 判断api是否需要鉴权
-		fmt.Println(tools.ResourceAuthenticatedCacheKey(permsRequired), ">>>")
-		val, err := svcCtx.RedisClient.Get(r.Context(), tools.ResourceAuthenticatedCacheKey(permsRequired)).Result()
+		// fmt.Println(tools.ResourceAuthenticatedCacheKey(permsRequired), ">>>")
+		val, err := svcCtx.RedisClient.Get(r.Context(), tools.ResourceAuthenticatedCacheKey).Result()
 		if err == redis.Nil {
 			// TODO 查不到接口权限，在查下数据库
 			w.WriteHeader(http.StatusUnauthorized)
@@ -31,15 +32,30 @@ func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		} else if err != nil {
 			panic(err)
 		} else {
-			if val == "0" {
-				// 不需要鉴权
-				fmt.Println("api不需要鉴权 -> ", src_uri, ":", src_method)
-				w.WriteHeader(http.StatusOK)
-				return
+			var permission []tools.ResourceAuthenticatedItem
+			json.Unmarshal([]byte(val), &permission)
+			for _, p := range permission {
+				if tools.MatchRegex(p.Resource, permsRequired) {
+					if !p.Authenticated {
+						fmt.Println("api不需要鉴权 -> ", src_uri, ":", src_method)
+						w.WriteHeader(http.StatusOK)
+						return
+					}
+
+				}
 			}
+			// if val == "0" {
+			// 	// 不需要鉴权
+			// 	//TODO 正则匹配
+			// 	fmt.Println("api不需要鉴权 -> ", src_uri, ":", src_method)
+			// 	w.WriteHeader(http.StatusOK)
+			// 	return
+			// }
 		}
+		fmt.Println("api需要鉴权 -> ", src_uri, ":", src_method)
 		var req types.ValidateTokenReq
 		if err := httpx.Parse(r, &req); err != nil {
+			fmt.Println("Parse token error:", err)
 			w.WriteHeader(http.StatusUnauthorized)
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
@@ -52,8 +68,11 @@ func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		} else {
 			w.Header().Set("X-Forwarded-User", resp.UserId)
 			w.Header().Set("X-Super-Admin", strconv.FormatBool(resp.IsSuperAdmin))
-			fmt.Println("response header", w.Header())
-			httpx.OkJsonCtx(r.Context(), w, resp)
+			// w.Header().Set("X-Content-Type-Options", "")
+			// w.Header().Set("X-Frame-Options", "")
+			fmt.Println("response header", w.Header(), "Response:", resp, r.Context())
+			w.WriteHeader(http.StatusOK)
+			httpx.Ok(w)
 		}
 	}
 }

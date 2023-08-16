@@ -13,6 +13,8 @@ import (
 )
 
 type (
+	GetMutipleUserInfoReq         = pb.GetMutipleUserInfoReq
+	GetMutipleUserInfoResp        = pb.GetMutipleUserInfoResp
 	GetUserInfoReq                = pb.GetUserInfoReq
 	GetUserInfoResp               = pb.GetUserInfoResp
 	GetUserMenuPermissionReq      = pb.GetUserMenuPermissionReq
@@ -29,6 +31,7 @@ type (
 		GetUserResourcePermission(ctx context.Context, in *GetUserResourcePermissionReq, opts ...grpc.CallOption) (*GetUserResourcePermissionResp, error)
 		GetUserMenuPermission(ctx context.Context, in *GetUserMenuPermissionReq, opts ...grpc.CallOption) (*GetUserMenuPermissionResp, error)
 		TokenValidate(ctx context.Context, in *TokenValidateReq, opts ...grpc.CallOption) (*TokenValidateResp, error)
+		GetMutipleUserInfo(ctx context.Context, in *GetMutipleUserInfoReq, opts ...grpc.CallOption) (*GetMutipleUserInfoResp, error)
 	}
 
 	defaultUsercenter struct {
@@ -60,4 +63,9 @@ func (m *defaultUsercenter) GetUserMenuPermission(ctx context.Context, in *GetUs
 func (m *defaultUsercenter) TokenValidate(ctx context.Context, in *TokenValidateReq, opts ...grpc.CallOption) (*TokenValidateResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.TokenValidate(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) GetMutipleUserInfo(ctx context.Context, in *GetMutipleUserInfoReq, opts ...grpc.CallOption) (*GetMutipleUserInfoResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.GetMutipleUserInfo(ctx, in, opts...)
 }

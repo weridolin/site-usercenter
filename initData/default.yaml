@@ -31,15 +31,22 @@ resources:
       server_name: "home"
       url: "/comments"
       method: "POST"
+      version: "v1" 
+      authenticated: false      
+
+    - id: 5
+      server_name: "home"
+      url: "/comments/(?P<user_id>\\d+)/reply"
+      method: "GET"
       version: "v1"
-      description: "提交网站评论"
-      authenticated: true      
+      description: "获取网站评论回复"
+      authenticated: false   
 
   
   blog:
     - id: 4
       server_name: "blog"
-      url: "/articles/<num:int>"
+      url: "/articles/(?P<pk>\\d+)"
       method: "GET"
       version: "v2"
       description: "获取文章详情"    
