@@ -13,6 +13,7 @@ type UserInfo struct {
 }
 
 type Menu struct {
+	Id       int    `json:"id"`
 	Name      string `json:"name"`
 	Url       string `json:"url"`
 	Icon      string `json:"icon"`

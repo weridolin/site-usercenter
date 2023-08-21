@@ -15,6 +15,7 @@ func (u UserInfo) FromUserModel(user models.User) *UserInfo {
 
 func (m Menu) FromMenuModel(menu models.Menu) *Menu {
 	return &Menu{
+		Id:        menu.ID,
 		Name:      menu.Name,
 		Url:       menu.Url,
 		Icon:      menu.Icon,
