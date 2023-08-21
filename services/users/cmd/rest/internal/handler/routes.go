@@ -33,6 +33,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/token/refresh",
 				Handler: user.TokenRefreshHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/rbac/menus",
+				Handler: user.GetMenuHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/usercenter/api/v1"),
 	)

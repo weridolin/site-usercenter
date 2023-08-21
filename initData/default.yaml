@@ -287,6 +287,14 @@ resources:
       description: "刷新TOKEN"
       authenticated: true
 
+    - id: 31
+      server_name: "usercenter"
+      url: "/rbac/menus"
+      method: "GET"
+      version: "v1"
+      description: "获取用户菜单列表"
+      authenticated: true
+      
 
 menus: ## 管理后台的菜单权限
   - id: 1

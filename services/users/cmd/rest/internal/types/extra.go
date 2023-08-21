@@ -24,3 +24,11 @@ func (m Menu) FromMenuModel(menu models.Menu) *Menu {
 		Type:      menu.Type,
 	}
 }
+
+func (m Menu) FromMenuModels(menus []*models.Menu) []*Menu {
+	var res []*Menu
+	for _, v := range menus {
+		res = append(res, m.FromMenuModel(*v))
+	}
+	return res
+}

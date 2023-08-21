@@ -88,11 +88,20 @@ type RefreshTokenReq struct {
 
 type BaseResponse struct {
 	Code int         `json:"code"`
-	Msg  string      `json:"msg"`
+	Msg  string      `json:"message"`
 	Data interface{} `json:"data"`
 }
 
 type PaginationParams struct {
 	Page int `query:"page" validate:"required,min=1"`
 	Size int `query:"size" validate:"required,min=1,max=1000"`
+}
+
+type GetMenuReq struct {
+	Authorization string `header:"authorization"`
+}
+
+type GetMenuResp struct {
+	BaseResponse
+	Data []*Menu `json:"data"`
 }

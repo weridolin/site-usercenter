@@ -29,10 +29,17 @@ func (Role) TableName() string {
 	return "auth_role"
 }
 
+func QueryRolePermission(RoleIds []int, DB *gorm.DB) ([]*Role, error) {
+	var roles []*Role
+	err := DB.Table("auth_role").Preload("Menus").Preload("Resources").Where("id in ?", RoleIds).Find(&roles).Error
+	return roles, err
+}
+
 type UserRoles struct {
 	BaseModel
 	UserId int `gorm:"comment:用户ID;uniqueIndex:udx_user_roles;not null"`
 	RoleId int `gorm:"comment:角色ID;uniqueIndex:udx_user_roles;not null"`
+	// Roles  []*Role `gorm:"many2many:user_roles;ForeignKey:ID;JoinForeignKey:UserId;References:ID;joinReferences:RoleId;"`
 }
 
 func (UserRoles) TableName() string {
