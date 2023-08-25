@@ -221,7 +221,7 @@ resources:
     - id: 23
       server_name: "apiCollector"
       url: "/apiInfo/search"
-      method: "GET"
+      method: "POST"
       version: "v1"
       description: "获取指定API信息"
       authenticated: false
@@ -253,7 +253,7 @@ resources:
       method: "POST"
       version: "v1"
       description: "登出接口"
-      authenticated: true
+      authenticated: false
 
     - id: 27
       server_name: "usercenter"

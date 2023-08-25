@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/svc"
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/types"
@@ -35,15 +36,8 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 			},
 		}, nil
 	}
-	// roleArr := make([]string, 0)
-	// for _, role := range user.Roles {
-	// 	// fmt.Println(role.Menus, role.Resources)
-	// 	// for _, menu := range role.Menus {
-	// 	// 	menuArr = append(menuArr, types.Menu{}.FromMenuModel(*menu))
-	// 	// }
-	// 	roleArr = append(roleArr, role.Name)
-	// }
 	accessToken := models.GenToken(*user, l.svcCtx.Config.JwtAuth.AccessSecret)
+	fmt.Println("accessToken:", accessToken)
 	return &types.LoginResp{
 		BaseResponse: types.BaseResponse{
 			Code: 0,
@@ -57,7 +51,9 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 				Phone:  user.Phone,
 				Age:    user.Age,
 				// Role:   roleArr,
-				Gender: user.Gender,
+				Gender:       user.Gender,
+				IsSuperAdmin: user.IsSuperAdmin,
+				Username:     user.Username,
 			},
 			// Menus: menuArr,
 		},

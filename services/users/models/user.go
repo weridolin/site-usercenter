@@ -51,8 +51,12 @@ func (u DefaultUserModel) Create(username, email, password string, DB *gorm.DB) 
 		return nil, errors.New("用户名或邮箱已存在")
 	} else {
 		DB.Create(&user)
+
+		ref := UserRoles{UserId: user.ID, RoleId: 2}
+		DB.Create(&ref)
 		return &user, nil
 	}
+	// // 赋给用户 初始化角色
 }
 
 func (m DefaultUserModel) QueryUser(condition interface{}, DB *gorm.DB) (User, error) {
