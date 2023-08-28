@@ -32,7 +32,8 @@ resources:
       url: "/comments"
       method: "POST"
       version: "v1" 
-      authenticated: false      
+      authenticated: true
+      description: "发表网站评论"      
 
     - id: 5
       server_name: "home"
@@ -42,9 +43,16 @@ resources:
       description: "获取网站评论回复"
       authenticated: false   
 
+    - id: 6
+      server_name: "home"
+      url: "/comments/(?P<user_id>\\d+)/reply"
+      method: "POST"
+      version: "v1"
+      description: "回复评论"
+      authenticated: true   
   
   blog:
-    - id: 4
+    - id: 6
       server_name: "blog"
       url: "/articles/(?P<pk>\\d+)"
       method: "GET"
@@ -53,7 +61,7 @@ resources:
       authenticated: false
 
 
-    - id: 5
+    - id: 7
       server_name: "blog"
       url: "/articles"
       method: "GET"
@@ -62,7 +70,7 @@ resources:
       authenticated: false
     
 
-    - id: 6
+    - id: 8
       server_name: "blog"
       url: "/articles/update_status"
       method: "POST"
@@ -71,7 +79,7 @@ resources:
       authenticated: true
 
     
-    - id: 7
+    - id: 9
       server_name: "blog"
       url: "/articles/search"
       method: "GET"
@@ -80,7 +88,7 @@ resources:
       authenticated: false
       
     
-    - id: 8
+    - id: 10
       server_name: "blog"
       url: "/articles/count"
       method: "GET"
@@ -89,7 +97,7 @@ resources:
       authenticated: false
  
     
-    - id: 9
+    - id: 11
       server_name: "blog"
       url: "/articlesTypes"
       method: "GET"
@@ -98,7 +106,7 @@ resources:
       authenticated: false
   
 
-    - id: 10
+    - id: 12
       server_name: "blog"
       url: "/articlesTags"
       method: "GET"
@@ -107,7 +115,7 @@ resources:
       authenticated: false
 
   drug:
-    - id: 11
+    - id: 13
       server_name: "drug"
       url: "/words/random/"
       method: "GET"
@@ -117,7 +125,7 @@ resources:
 
 
   fileBroker:
-    - id: 12
+    - id: 14
       server_name: "fileBroker"
       url: "/"
       method: "POST"
@@ -125,7 +133,7 @@ resources:
       description: "文件预信息上传"
       authenticated: false
 
-    - id: 13
+    - id: 15
       server_name: "fileBroker"
       url: "/search"
       method: "GET"
@@ -134,7 +142,7 @@ resources:
       authenticated: false
 
     
-    - id: 14
+    - id: 16
       server_name: "fileBroker"
       url: "/"
       method: "GET"
@@ -144,7 +152,7 @@ resources:
 
 
   dataFaker:
-    - id: 15
+    - id: 17
       server_name: "dataFaker"
       url: "/"
       method: "POST"
@@ -153,7 +161,7 @@ resources:
       authenticated: false
 
 
-    - id: 16
+    - id: 18
       server_name: "dataFaker"
       url: "/search/"
       method: "GET"
@@ -162,7 +170,7 @@ resources:
       authenticated: false
 
 
-    - id: 17
+    - id: 19
       server_name: "dataFaker"
       url: "/"
       method: "GET"
@@ -172,7 +180,7 @@ resources:
 
 
   shortUrl:
-    - id: 18
+    - id: 20
       server_name: "shortUrl"
       url: "/create/"
       method: "POST"
@@ -181,7 +189,7 @@ resources:
       authenticated: false
 
 
-    - id: 19
+    - id: 21
       server_name: "shortUrl"
       url: "/redirect/"
       method: "GET"
@@ -191,7 +199,7 @@ resources:
 
 
   apiCollector:
-    - id: 20
+    - id: 22
       server_name: "apiCollector"
       url: "/task/"
       method: "POST"
@@ -200,7 +208,7 @@ resources:
       authenticated: true
 
 
-    - id: 21
+    - id: 23
       server_name: "apiCollector"
       url: "/task/"
       method: "GET"
@@ -209,7 +217,7 @@ resources:
       authenticated: true
 
 
-    - id: 22
+    - id: 24
       server_name: "apiCollector"
       url: "/apiInfo"
       method: "GET"
@@ -218,7 +226,7 @@ resources:
       authenticated: false
 
 
-    - id: 23
+    - id: 25
       server_name: "apiCollector"
       url: "/apiInfo/search"
       method: "POST"
@@ -227,7 +235,7 @@ resources:
       authenticated: false
 
 
-    - id: 24
+    - id: 26
       server_name: "apiCollector"
       url: "/apiResource/"
       method: "GET"
@@ -236,7 +244,7 @@ resources:
       authenticated: true
 
 
-    - id: 25
+    - id: 27
       server_name: "apiCollector"
       url: "/apiResource/"
       method: "POST"
@@ -247,7 +255,7 @@ resources:
 
   usercenter:
 
-    - id: 26
+    - id: 28
       server_name: "usercenter"
       url: "/logout"
       method: "POST"
@@ -255,7 +263,7 @@ resources:
       description: "登出接口"
       authenticated: false
 
-    - id: 27
+    - id: 29
       server_name: "usercenter"
       url: "/login"
       method: "POST"
@@ -263,7 +271,7 @@ resources:
       description: "登录接口"
       authenticated: false
 
-    - id: 28
+    - id: 30
       server_name: "usercenter"
       url: "/register"
       method: "POST"
@@ -271,7 +279,7 @@ resources:
       description: "注册接口"
       authenticated: false
 
-    - id: 29
+    - id: 31
       server_name: "usercenter"
       url: "/profile"
       method: "GET"
@@ -279,7 +287,7 @@ resources:
       description: "获取用户信息"
       authenticated: true
     
-    - id: 30
+    - id: 32
       server_name: "usercenter"
       url: "/token/refresh"
       method: "POST"
@@ -287,7 +295,7 @@ resources:
       description: "刷新TOKEN"
       authenticated: true
 
-    - id: 31
+    - id: 33
       server_name: "usercenter"
       url: "/rbac/menus"
       method: "GET"
@@ -367,7 +375,7 @@ roles_resources:
     resource_id: "*"
       
   - role_id: 2
-    resource_id: [1,2,3,26]
+    resource_id: "*"
 
 # user_role:
 #   - user_id: 1
