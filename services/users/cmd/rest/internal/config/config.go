@@ -12,7 +12,15 @@ type Config struct {
 		AccessSecret string
 		AccessExpire int64
 	}
-	DBUri  string
+	MySQLDBUri    string
+	POSTGRESQLURI string
+	// POSTGRESQL struct {
+	// 	Host     string
+	// 	Port     int
+	// 	User     string
+	// 	Password interface{}
+	// 	DBName   string
+	// }
 	Logger struct {
 		logx.LogConf
 	}

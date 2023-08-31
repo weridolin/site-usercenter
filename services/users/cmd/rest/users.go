@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"net"
+	"os"
 	"time"
 
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/config"
@@ -78,10 +79,11 @@ func RegisterServiceToETCD(conf *config.Config) {
 }
 
 func main() {
-	// fmt.Println("DB_URI", os.Getenv("DB_URI"))
+	fmt.Println("ENV", os.Environ())
 	flag.Parse()
 	var c config.Config
-	conf.MustLoad(*configFile, &c)
+	option := conf.UseEnv()
+	conf.MustLoad(*configFile, &c, option)
 
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()

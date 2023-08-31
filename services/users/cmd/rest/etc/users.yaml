@@ -4,7 +4,11 @@ Port: 8080
 JwtAuth:
   AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
   AccessExpire: 36000
-DBUri: "root:werido@tcp(8.131.78.84:3306)/sitebackend?charset=utf8mb4&parseTime=true"
+
+MySQLDBUri: "root:werido@tcp(8.131.78.84:3306)/sitebackend?charset=utf8mb4&parseTime=true"
+
+POSTGRESQLURI: "host=sitedb user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB} port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+
 Logger:
   Level: debug
   # Path: /var/log/users.log
