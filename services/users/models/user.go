@@ -40,6 +40,10 @@ func NewUserModel(table string) UserModel {
 	}
 }
 
+func (User) TableName() string {
+	return "user"
+}
+
 func (u DefaultUserModel) Create(username, email, password string, DB *gorm.DB) (*User, error) {
 	user := User{
 		Username: username,
