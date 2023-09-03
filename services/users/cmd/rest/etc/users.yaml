@@ -9,6 +9,8 @@ MySQLDBUri: "root:werido@tcp(8.131.78.84:3306)/sitebackend?charset=utf8mb4&parse
 
 POSTGRESQLURI: "host=sitedb user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_AUTH_DB} port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 
+REDISURI: "redis://:${REDIS_PASSWORD}@${REDIS_HOST}:6379/4"
+
 Logger:
   Level: debug
   # Path: /var/log/users.log

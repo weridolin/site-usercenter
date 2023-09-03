@@ -6,9 +6,9 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-func NewRedisClient() *redis.Client {
+func NewRedisClient(RedisUri string) *redis.Client {
 
-	opt, err := redis.ParseURL("redis://:werido@8.131.78.84:6379/4")
+	opt, err := redis.ParseURL(RedisUri)
 	if err != nil {
 		panic(err)
 	}

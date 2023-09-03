@@ -14,6 +14,7 @@ type Config struct {
 	}
 	MySQLDBUri    string
 	POSTGRESQLURI string
+	REDISURI      string
 	// POSTGRESQL struct {
 	// 	Host     string
 	// 	Port     int

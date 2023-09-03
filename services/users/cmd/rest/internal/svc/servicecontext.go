@@ -25,7 +25,7 @@ type ServiceContext struct {
 	RedisClient *redis.Client
 }
 
-func LoadInitData(DB *gorm.DB) {
+func LoadInitData(c config.Config, DB *gorm.DB) {
 	// 加载内置权限和角色
 	// file := "etc/initdata.yaml"
 	dir, _ := os.Getwd()
@@ -81,7 +81,7 @@ func LoadInitData(DB *gorm.DB) {
 	}
 
 	// 缓存权限资源是否需要鉴权到redis,这里不放在内存是为了多个节点情况下不用去做同步
-	redis_client := tools.NewRedisClient()
+	redis_client := tools.NewRedisClient(c.REDISURI)
 	var resourceCacheData []tools.ResourceAuthenticatedItem
 	// resourceListJson, _ := json.Marshal(defaultData.Resources)
 	// ctx := context.TODO()
@@ -128,13 +128,13 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	db.AutoMigrate(&models.Menu{})
 	db.AutoMigrate(&models.Resource{})
 
-	LoadInitData(db)
+	LoadInitData(c, db)
 
 	return &ServiceContext{
 		Config:      c,
 		DB:          db,
 		UserModel:   models.NewUserModel("user"),
 		RoleModel:   models.Role{},
-		RedisClient: tools.NewRedisClient(),
+		RedisClient: tools.NewRedisClient(c.REDISURI),
 	}
 }

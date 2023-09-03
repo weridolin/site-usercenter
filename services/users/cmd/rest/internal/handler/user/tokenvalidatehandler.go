@@ -30,6 +30,7 @@ func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			w.WriteHeader(http.StatusUnauthorized)
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else if err != nil {
+			fmt.Println("redis get authentication error:", err)
 			panic(err)
 		} else {
 			var permission []tools.ResourceAuthenticatedItem
