@@ -58,6 +58,14 @@ resources:
       version: "v1"
       description: "提交更新日志"
       authenticated: true
+    
+    - id: 8
+      server_name: "home"
+      url: "/backgroundImage"
+      method: "GET"
+      version: "v1"
+      description: "获取背景图片"
+      authenticated: false
   
   blog:
     - id: 8
