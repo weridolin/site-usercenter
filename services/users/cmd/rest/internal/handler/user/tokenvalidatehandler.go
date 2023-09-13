@@ -17,6 +17,7 @@ import (
 
 func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("check token -> ", r.Header, r.Context())
 		var src_uri = r.Header.Get("X-Original-Request-Uri")
 		var src_method = r.Header.Get("X-Original-Method")
 		// 获取权限API权限表达式
