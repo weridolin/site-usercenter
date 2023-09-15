@@ -7,6 +7,18 @@ Etcd:
   InsecureSkipVerify: true
 
 DBUri: "root:werido@tcp(8.131.78.84:3306)/sitebackend?charset=utf8mb4&parseTime=true"
+POSTGRESQLURI: "host=sitedb user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_AUTH_DB} port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+
 JwtAuth:
   AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
   AccessExpire: 36000
+
+## 链路追踪
+Middlewares:
+  Trace: true
+  Metrics: true
+Telemetry:
+  Name: usercenter.rpc
+  Endpoint: http://jaeger:14268/api/traces
+  Batcher: jaeger
+  Sampler: 1.0

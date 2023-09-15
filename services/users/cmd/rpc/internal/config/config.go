@@ -9,4 +9,5 @@ type Config struct {
 		AccessSecret string
 		AccessExpire int64
 	}
+	POSTGRESQLURI string
 }
