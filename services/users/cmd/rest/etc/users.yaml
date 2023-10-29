@@ -7,9 +7,9 @@ JwtAuth:
 
 MySQLDBUri: "root:werido@tcp(8.131.78.84:3306)/sitebackend?charset=utf8mb4&parseTime=true"
 
-POSTGRESQLURI: "host=sitedb user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_AUTH_DB} port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+POSTGRESQLURI: "host=${SITEDB_SVC_NAME}.${SITEDB_SVC_NAME_NAMESPACE} user=${SITE_USER} password=${SITE_PASSWORD} dbname=${SITE_AUTH_DB} port=${SITEDB_SVC_NAME_PORT} sslmode=disable TimeZone=Asia/Shanghai"
 
-REDISURI: "redis://:${REDIS_PASSWORD}@${REDIS_HOST}:6379/4"
+REDISURI: "redis://:${REDIS_PASSWORD}@${REDIS_SVC_NAME}.${REDIS_SVC_NAME_NAMESPACE}:${REDIS_SVC_PORT}/4"
 
 Logger:
   Level: debug
