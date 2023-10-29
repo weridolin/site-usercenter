@@ -1,10 +1,10 @@
 Name: usercenter.rpc
 ListenOn: 0.0.0.0:8081
-Etcd:
-  Hosts:
-  - http://etcd1:2379
-  Key: /site/usercenter/rpc
-  InsecureSkipVerify: true
+# Etcd:
+#   Hosts:
+#   - http://etcd1:2379
+#   Key: /site/usercenter/rpc
+#   InsecureSkipVerify: true
 
 DBUri: "root:werido@tcp(8.131.78.84:3306)/sitebackend?charset=utf8mb4&parseTime=true"
 POSTGRESQLURI: "host=${SITEDB_SVC_NAME}.${SITEDB_SVC_NAME_NAMESPACE} user=${SITE_USER} password=${SITE_PASSWORD} dbname=${SITE_AUTH_DB} port=${SITEDB_SVC_NAME_PORT} sslmode=disable TimeZone=Asia/Shanghai"

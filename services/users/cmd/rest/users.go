@@ -92,6 +92,10 @@ func main() {
 	handler.RegisterHandlers(server, ctx)
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
-	go RegisterServiceToETCD(&c)
+	if env := os.Getenv("K8S"); env != "1" {
+		go RegisterServiceToETCD(&c)
+	} else {
+		fmt.Println("k8s env, skip register to etcd")
+	}
 	server.Start()
 }
