@@ -7,7 +7,6 @@ import (
 )
 
 func NewRedisClient(RedisUri string) *redis.Client {
-
 	opt, err := redis.ParseURL(RedisUri)
 	if err != nil {
 		panic(err)
