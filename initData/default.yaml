@@ -318,7 +318,169 @@ resources:
       version: "v1"
       description: "获取用户菜单列表"
       authenticated: true
-      
+
+  burning:
+    - id: 36
+      server_name: "burning"
+      url: "/users/profile"
+      method: "GET"
+      version: "v1"
+      description: "获取用户档案"
+      authenticated: true
+    
+    - id: 37
+      server_name: "burning"
+      url: "/users/profile"
+      method: "PUT"
+      version: "v1"
+      description: "更新用户档案"
+      authenticated: true
+
+    - id: 38
+      server_name: "burning"
+      url: "/users/sign"
+      method: "POST"
+      version: "v1"
+      description: "用户签到"
+      authenticated: true
+
+    - id: 39
+      server_name: "burning"
+      url: "/video"
+      method: "GET"
+      version: "v1"
+      description: "获取教学视频"
+      authenticated: false
+
+    - id: 40
+      server_name: "burning"
+      url: "/music"
+      method: "GET"
+      version: "v1"
+      description: "获取随机音乐"
+      authenticated: false      
+
+    - id: 41
+      server_name: "burning"
+      url: "/history/train"
+      method: "GET"
+      version: "v1"
+      description: "获取训练历史记录"
+      authenticated: true  
+
+    - id: 42
+      server_name: "burning"
+      url: "/history/train"
+      method: "POST"
+      version: "v1"
+      description: "添加历史训练记录"
+      authenticated: true  
+
+    - id: 43
+      server_name: "burning"
+      url: "/history/train/(?P<train_id>\\d+)"
+      method: "DELETE"
+      version: "v1"
+      description: "删除历史训练记录"
+      authenticated: true 
+
+    - id: 44
+      server_name: "burning"
+      url: "/history/train/(?P<train_id>\\d+)"
+      method: "PUT"
+      version: "v1"
+      description: "更新历史训练记录"
+      authenticated: true 
+
+    - id: 45
+      server_name: "burning"
+      url: "/history/train/(?P<train_id>\\d+)/finish"
+      method: "POST"
+      version: "v1"
+      description: "完成训练"
+      authenticated: true 
+
+    - id: 46
+      server_name: "burning"
+      url: "/history/train/(?P<train_id>\\d+)"
+      method: "GET"
+      version: "v1"
+      description: "获取训练详情"
+      authenticated: true 
+
+    - id: 47
+      server_name: "burning"
+      url: "/history/train/(?P<train_id>\\d+)/content"
+      method: "POST"
+      version: "v1"
+      description: "增加训练内容"
+      authenticated: true 
+
+    - id: 48
+      server_name: "burning"
+      url: "/history/train/(?P<train_id>\\d+)/content/(?P<content_id>\\d+)"
+      method: "PUT"
+      version: "v1"
+      description: "更新训练内容"
+      authenticated: true 
+
+    - id: 49
+      server_name: "burning"
+      url: "/history/train/(?P<train_id>\\d+)/content/(?P<content_id>\\d+)"
+      method: "DELETE"
+      version: "v1"
+      description: "删除训练内容"
+      authenticated: true 
+
+    - id: 50
+      server_name: "burning"
+      url: "/history/food"
+      method: "GET"
+      version: "v1"
+      description: "获取饮食记录"
+      authenticated: true 
+
+    - id: 51
+      server_name: "burning"
+      url: "/history/food/(?P<train_id>\\d+)"
+      method: "PUT"
+      version: "v1"
+      description: "修改饮食记录"
+      authenticated: true 
+
+    - id: 52
+      server_name: "burning"
+      url: "/actions"
+      method: "GET"
+      version: "v1"
+      description: "获取动作列表"
+      authenticated: false 
+
+    - id: 53
+      server_name: "burning"
+      url: "/actions"
+      method: "POST"
+      version: "v1"
+      description: "添加动作"
+      authenticated: false 
+
+    - id: 54
+      server_name: "burning"
+      url: "/actions"
+      method: "PUT"
+      version: "v1"
+      description: "更新动作"
+      authenticated: false 
+
+    - id: 55
+      server_name: "burning"
+      url: "/actions"
+      method: "DELETE"
+      version: "v1"
+      description: "删除动作"
+      authenticated: false 
+
+
 
 menus: ## 管理后台的菜单权限
   - id: 1
@@ -384,7 +546,6 @@ roles:
     name: "guest"
     description: "游客"
     zone: "site"
-
 
 roles_resources:
   - role_id: 1
