@@ -220,6 +220,12 @@ func (r *Resource) Format() string {
 	return "/" + r.ServerName + "/api/" + r.Version + r.Url + ":" + r.Method
 }
 
+func QueryResource(condition map[string]interface{}, DB *gorm.DB) ([]*Resource, error) {
+	var resources []*Resource
+	err := DB.Table("auth_resource").Where(condition).Find(&resources).Error
+	return resources, err
+}
+
 type ResourcePermission struct {
 	BaseModel
 	ResourceId int `gorm:"uniqueIndex:udx_resource_role;not null;comment:资源ID" json:"resource_id" yaml:"resource_id"`
