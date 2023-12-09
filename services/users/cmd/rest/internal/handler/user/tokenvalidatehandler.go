@@ -36,10 +36,10 @@ func TokenValidateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			for _, v := range resources {
 				permission = append(permission, tools.ResourceAuthenticatedItem{
 					Resource:      v.Format(),
-					Authenticated: false,
+					Authenticated: v.Authenticated,
 				})
 				if tools.MatchRegex(v.Format(), permsRequired) {
-					if !v.Authenticated {
+					if v.Authenticated {
 						need_auth = true
 					}
 
