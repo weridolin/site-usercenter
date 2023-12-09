@@ -30,7 +30,7 @@ func GenToken(user User, key string) string {
 func ParseToken(tokenString string, key string) (jwt.MapClaims, error) {
 	var tokenStr = tokenString
 	// fmt.Println(strings.HasPrefix(tokenString, "Bearer"))\
-	fmt.Println("logout -> ", tokenString)
+	fmt.Println("jwt token -> ", tokenString)
 	if strings.HasPrefix(tokenString, "Bearer") {
 		tokenStr = tokenString[7:] //去掉 bearer 字符串
 	}

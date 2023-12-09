@@ -123,7 +123,7 @@ func (l *TokenValidateLogic) HasPermission(userId int, apiPermissionRequired str
 				break
 			}
 		}
-		fmt.Println("get permission from cache", permission)
+		fmt.Println("get permission from cache", permission, val)
 	}
 	return res
 }
