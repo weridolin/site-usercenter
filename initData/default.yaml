@@ -481,6 +481,14 @@ resources:
       authenticated: false 
 
 
+    - id: 55
+      serer_name: "burning"
+      url: "/image/(?P<file_path>.*)"
+      method: "GET"
+      version: "v1"
+      description: "获取图片"
+      authenticated: false
+
 
 menus: ## 管理后台的菜单权限
   - id: 1
