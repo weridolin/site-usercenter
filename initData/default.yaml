@@ -481,8 +481,8 @@ resources:
       authenticated: false 
 
 
-    - id: 55
-      serer_name: "burning"
+    - id: 56
+      server_name: "burning"
       url: "/image/(?P<file_path>.*)"
       method: "GET"
       version: "v1"
