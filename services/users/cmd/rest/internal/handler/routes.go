@@ -6,7 +6,7 @@ import (
 
 	user "github.com/weridolin/site-gateway/services/users/cmd/rest/internal/handler/user"
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/svc"
-
+	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/handler/rbac"
 	"github.com/zeromicro/go-zero/rest"
 )
 
@@ -37,6 +37,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/rbac/menus",
 				Handler: user.GetMenuHandler(serverCtx),
+			},
+			{
+				Method: http.MethodGet,
+				Path: "/rbac/reloadResource",
+				Handler: rbac.ReLoadResourceHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/usercenter/api/v1"),

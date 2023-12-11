@@ -319,8 +319,16 @@ resources:
       description: "获取用户菜单列表"
       authenticated: true
 
-  burning:
     - id: 36
+      server_name: "usercenter"
+      url: "/rbac/reloadResource"
+      method: "GET"
+      version: "v1"
+      description: "重新加载用户资源"
+      authenticated: true
+
+  burning:
+    - id: 37
       server_name: "burning"
       url: "/users/profile"
       method: "GET"
@@ -328,7 +336,7 @@ resources:
       description: "获取用户档案"
       authenticated: true
     
-    - id: 37
+    - id: 38
       server_name: "burning"
       url: "/users/profile"
       method: "PUT"
@@ -336,7 +344,7 @@ resources:
       description: "更新用户档案"
       authenticated: true
 
-    - id: 38
+    - id: 39
       server_name: "burning"
       url: "/users/sign"
       method: "POST"
@@ -344,7 +352,7 @@ resources:
       description: "用户签到"
       authenticated: true
 
-    - id: 39
+    - id: 40
       server_name: "burning"
       url: "/video"
       method: "GET"
@@ -352,7 +360,7 @@ resources:
       description: "获取教学视频"
       authenticated: false
 
-    - id: 40
+    - id: 41
       server_name: "burning"
       url: "/music"
       method: "GET"
@@ -360,7 +368,7 @@ resources:
       description: "获取随机音乐"
       authenticated: false      
 
-    - id: 41
+    - id: 42
       server_name: "burning"
       url: "/history/train"
       method: "GET"
@@ -368,7 +376,7 @@ resources:
       description: "获取训练历史记录"
       authenticated: true  
 
-    - id: 42
+    - id: 43
       server_name: "burning"
       url: "/history/train"
       method: "POST"
@@ -376,7 +384,7 @@ resources:
       description: "添加历史训练记录"
       authenticated: true  
 
-    - id: 43
+    - id: 44
       server_name: "burning"
       url: "/history/train/(?P<train_id>\\d+)"
       method: "DELETE"
@@ -384,7 +392,7 @@ resources:
       description: "删除历史训练记录"
       authenticated: true 
 
-    - id: 44
+    - id: 45
       server_name: "burning"
       url: "/history/train/(?P<train_id>\\d+)"
       method: "PUT"
@@ -392,7 +400,7 @@ resources:
       description: "更新历史训练记录"
       authenticated: true 
 
-    - id: 45
+    - id: 46
       server_name: "burning"
       url: "/history/train/(?P<train_id>\\d+)/finish"
       method: "POST"
@@ -400,7 +408,7 @@ resources:
       description: "完成训练"
       authenticated: true 
 
-    - id: 46
+    - id: 47
       server_name: "burning"
       url: "/history/train/(?P<train_id>\\d+)"
       method: "GET"
@@ -408,7 +416,7 @@ resources:
       description: "获取训练详情"
       authenticated: true 
 
-    - id: 47
+    - id: 48
       server_name: "burning"
       url: "/history/train/(?P<train_id>\\d+)/content"
       method: "POST"
@@ -416,7 +424,7 @@ resources:
       description: "增加训练内容"
       authenticated: true 
 
-    - id: 48
+    - id: 49
       server_name: "burning"
       url: "/history/train/(?P<train_id>\\d+)/content/(?P<content_id>\\d+)"
       method: "PUT"
@@ -424,7 +432,7 @@ resources:
       description: "更新训练内容"
       authenticated: true 
 
-    - id: 49
+    - id: 50
       server_name: "burning"
       url: "/history/train/(?P<train_id>\\d+)/content/(?P<content_id>\\d+)"
       method: "DELETE"
@@ -432,7 +440,7 @@ resources:
       description: "删除训练内容"
       authenticated: true 
 
-    - id: 50
+    - id: 51
       server_name: "burning"
       url: "/history/food"
       method: "GET"
@@ -440,7 +448,7 @@ resources:
       description: "获取饮食记录"
       authenticated: true 
 
-    - id: 51
+    - id: 52
       server_name: "burning"
       url: "/history/food/(?P<train_id>\\d+)"
       method: "PUT"
@@ -448,7 +456,7 @@ resources:
       description: "修改饮食记录"
       authenticated: true 
 
-    - id: 52
+    - id: 53
       server_name: "burning"
       url: "/actions"
       method: "GET"
@@ -456,7 +464,7 @@ resources:
       description: "获取动作列表"
       authenticated: false 
 
-    - id: 53
+    - id: 54
       server_name: "burning"
       url: "/actions"
       method: "POST"
@@ -464,7 +472,7 @@ resources:
       description: "添加动作"
       authenticated: false 
 
-    - id: 54
+    - id: 55
       server_name: "burning"
       url: "/actions"
       method: "PUT"
@@ -472,7 +480,7 @@ resources:
       description: "更新动作"
       authenticated: false 
 
-    - id: 55
+    - id: 56
       server_name: "burning"
       url: "/actions"
       method: "DELETE"
@@ -481,7 +489,7 @@ resources:
       authenticated: false 
 
 
-    - id: 56
+    - id: 57
       server_name: "burning"
       url: "/image/(?P<file_path>.*)"
       method: "GET"
@@ -489,6 +497,13 @@ resources:
       description: "获取图片"
       authenticated: false
 
+    - id: 58
+      server_name: "burning"
+      url: "/users/lastSign"
+      method: "GET"
+      version: "v1"
+      description: "获取最近一次签到时间"
+      authenticated: true
 
 menus: ## 管理后台的菜单权限
   - id: 1

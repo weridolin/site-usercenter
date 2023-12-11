@@ -106,3 +106,11 @@ type GetMenuResp struct {
 	BaseResponse
 	Data []*Menu `json:"data"`
 }
+
+type ReLoadResourceReq struct {
+	Authorization string `header:"authorization"`
+}
+
+type ReLoadResourceResp struct {
+	BaseResponse
+}
