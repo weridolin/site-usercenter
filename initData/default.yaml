@@ -480,6 +480,37 @@ resources:
       description: "删除动作"
       authenticated: false 
 
+    - id: 56
+      server_name: "burning"
+      url: "/actions/custom"
+      method: "POST"
+      version: "v1"
+      description: "添加自定义动作"
+      authenticated: true 
+
+    - id: 57
+      server_name: "burning"
+      url: "/actions/custom"
+      method: "GET"
+      version: "v1"
+      description: "获取自定义动作"
+      authenticated: true 
+
+    - id: 58
+      server_name: "burning"
+      url: "/actions/custom/(?P<custom_action_id>\\d+)"
+      method: "PUT"
+      version: "v1"
+      description: "更新自定义动作"
+      authenticated: true 
+
+    - id: 59
+      server_name: "burning"
+      url: "/actions/custom/(?P<custom_action_id>\\d+)"
+      method: "DELETE"
+      version: "v1"
+      description: "删除自定义动作"
+      authenticated: true 
 
 
 menus: ## 管理后台的菜单权限
