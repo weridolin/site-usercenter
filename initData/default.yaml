@@ -560,6 +560,46 @@ resources:
       description: "更新身体数据信息"
       authenticated: true
 
+    - id: 65
+      server_name: "burning"
+      url: "/users/bodyInfo"
+      method: "DELETE"
+      version: "v1"
+      description: "删除身体数据信息"
+      authenticated: true
+
+    - id: 66
+      server_name: "burning"
+      url: "/history/diet"
+      method: "GET"
+      version: "v1"
+      description: "获取饮食记录"
+      authenticated: true
+    
+    - id: 67
+      server_name: "burning"
+      url: "/history/diet"
+      method: "POST"
+      version: "v1"
+      description: "添加饮食记录"
+      authenticated: true
+
+    - id: 68
+      server_name: "burning"
+      url: "/history/diet/(?P<diet_record_id>\\d+)"
+      method: "PUT"
+      version: "v1"
+      description: "更新饮食记录"
+      authenticated: true
+    
+    - id: 69
+      server_name: "burning"
+      url: "/history/diet/(?P<diet_record_id>\\d+)"
+      method: "DELETE"
+      version: "v1"
+      description: "删除饮食记录"
+      authenticated: true
+
 menus: ## 管理后台的菜单权限
   - id: 1
     name: "权限管理"
