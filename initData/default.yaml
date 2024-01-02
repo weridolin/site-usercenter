@@ -61,10 +61,18 @@ resources:
     
     - id: 8
       server_name: "home"
-      url: "/backgroundImage"
+      url: "/backGroundImages"
       method: "GET"
       version: "v1"
-      description: "获取背景图片"
+      description: "获取背景图片列表"
+      authenticated: false
+    
+    - id: 8 
+      server_name: "home"
+      url: "/backGroundImages/detail/(?P<file_path>.*)"
+      method: "GET"
+      version: "v1"
+      description: "获取图片"
       authenticated: false
   
   blog:
