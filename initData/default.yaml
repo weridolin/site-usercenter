@@ -608,6 +608,71 @@ resources:
       description: "删除饮食记录"
       authenticated: true
 
+  webhook:
+    - id: 1
+      server_name: "webhook"
+      url: "/(?P<uuid>.*)"
+      method: "POST"
+      version: "v1"
+      description: "webhook"
+      authenticated: false
+
+    - id : 2
+      server_name: "webhook"
+      url: "/(?P<uuid>.*)"
+      method: "GET"
+      version: "v1"
+      description: "webhook"
+      authenticated: false
+
+    - id: 3
+      server_name: "webhook"
+      url: "/(?P<uuid>.*)"
+      method: "PUT"
+      version: "v1"
+      description: "webhook"
+      authenticated: false
+    
+    - id: 4
+      server_name: "webhook"
+      url: "/(?P<uuid>.*)"
+      method: "DELETE"
+      version: "v1"
+      description: "webhook"
+      authenticated: false
+    
+    - id: 5
+      server_name: "webhook"
+      url: "/(?P<uuid>.*)"
+      method: "PATCH"
+      version: "v1"
+      description: "webhook"
+      authenticated: false
+
+    - id: 6
+      server_name: "webhook"
+      url: "/(?P<uuid>.*)"
+      method: "OPTIONS"
+      version: "v1"
+      description: "webhook"
+      authenticated: false
+
+    - id  : 7
+      server_name: "webhook"
+      url: "/(?P<uuid>.*)"
+      method: "HEAD"
+      version: "v1"
+      description: "webhook"
+      authenticated: false
+
+    - id: 8
+      server_name: "webhook"
+      url: "/(?P<uuid>.*)/history"
+      method: "GET"
+      version: "v1"
+      description: "webhook"
+      authenticated: false
+
 menus: ## 管理后台的菜单权限
   - id: 1
     name: "权限管理"
