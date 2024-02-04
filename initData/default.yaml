@@ -608,6 +608,16 @@ resources:
       description: "删除饮食记录"
       authenticated: true
 
+    - id: 70
+      server_name: "burning"
+      url: "/media/music"
+      method: "GET"
+      version: "v1"
+      description: "获取推荐音乐"
+      authenticated: false
+
+    
+
   webhook:
     - id: 1
       server_name: "webhook"
