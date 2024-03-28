@@ -616,8 +616,6 @@ resources:
       description: "获取推荐音乐"
       authenticated: false
 
-    
-
   webhook:
     - id: 1
       server_name: "webhook"
@@ -682,6 +680,83 @@ resources:
       version: "v1"
       description: "webhook"
       authenticated: false
+
+  gpt:
+    - id: 1
+      server_name: "gpt"
+      url: "/conversation"
+      method: "GET"
+      version: "v1"
+      description: "getConversationsList"
+      authenticated: true
+
+    - id: 2
+      server_name: "gpt"
+      url: "/conversation"
+      method: "POST"
+      version: "v1"
+      description: "createConversation"
+      authenticated: true 
+
+    - id: 3
+      server_name: "gpt"
+      url: "/conversation/(?P<conversation_id>\\d+)"
+      method: "DELETE"
+      version: "v1"
+      description: "deleteConversation"
+      authenticated: true 
+
+    - id: 4
+      server_name: "gpt"
+      url: "/conversation/(?P<conversation_id>\\d+)"
+      method: "PUT"
+      version: "v1"
+      description: "updateConversation"
+      authenticated: true
+
+    - id: 4
+      server_name: "gpt"
+      url: "/message"
+      method: "GET"
+      version: "v1"
+      description: "getMessageList"
+      authenticated: true
+    
+    - id: 5
+      server_name: "gpt"
+      url: "/message"
+      method: "POST"
+      version: "v1"
+      description: "createMessage"
+      authenticated: true
+    
+    - id: 6
+      server_name: "gpt"
+      url: "/conversation/register-websocket"
+      method: "POST"
+      version: "v1"
+      description: "registerWebsocket"
+      authenticated: true
+
+    - id: 7
+      server_name: "sse/gpt"
+      url: "/message"
+      method: "POST"
+      version: "v1"
+      description: "createMessageBySSE"
+      authenticated: true
+    
+    - id: 8
+      server_name: "gpt"
+      url: "/message/stop-sse"
+      method: "POST"
+      version: "v1"
+      description: "stopMessageBySSE"
+      authenticated: true
+
+
+
+
 
 menus: ## 管理后台的菜单权限
   - id: 1
