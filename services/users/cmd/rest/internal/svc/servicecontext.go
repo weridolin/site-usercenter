@@ -62,7 +62,7 @@ func LoadInitData(c config.Config, DB *gorm.DB) {
 		if permission["resource_id"] == "*" {
 			fmt.Println("add all resource permission to role_id: ", permission["role_id"])
 			// 先删除role_id已经有的权限
-			DB.Where("role_id = ?", permission["role_id"]).Delete(&models.ResourcePermission{})
+			DB.Unscoped().Where("role_id = ?", permission["role_id"]).Delete(&models.ResourcePermission{})
 			DB.Commit()
 			var count int64
 			DB.Model(&models.Resource{}).Count(&count)
@@ -75,7 +75,7 @@ func LoadInitData(c config.Config, DB *gorm.DB) {
 		} else {
 			var list []models.ResourcePermission
 			// 先删除role_id已经有的权限
-			DB.Where("role_id = ?", permission["role_id"]).Delete(&models.ResourcePermission{})
+			DB.Unscoped().Where("role_id = ?", permission["role_id"]).Delete(&models.ResourcePermission{})
 			DB.Commit()
 			//在更新现有的权限
 			for _, v := range permission["resource_id"].([]interface{}) {
