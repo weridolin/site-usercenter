@@ -61,6 +61,8 @@ func LoadInitData(c config.Config, DB *gorm.DB) {
 	for _, permission := range defaultData.RolesResource {
 		if permission["resource_id"] == "*" {
 			fmt.Println("add all resource permission to role_id: ", permission["role_id"])
+			// 先删除role_id已经有的权限
+			DB.Where("role_id = ?", permission["role_id"]).Delete(&models.ResourcePermission{})
 			var count int64
 			DB.Model(&models.Resource{}).Count(&count)
 			var resourceList []int
