@@ -2,6 +2,7 @@ package rbac
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/svc"
 	"github.com/weridolin/site-gateway/services/users/cmd/rest/internal/types"
@@ -37,7 +38,7 @@ func (l *PermissionLogic) ReLoadResourceLogic(req *types.ReLoadResourceReq) (res
 	for _, user := range user_list {
 		cache_key := tools.UserPermissionKey(user.ID)
 		l.svcCtx.RedisClient.Del(l.ctx, cache_key)
-
+		fmt.Println("清除用户缓存 -> ", cache_key)
 	}
 
 	// 重新加载资源
