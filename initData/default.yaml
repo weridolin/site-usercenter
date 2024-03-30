@@ -739,8 +739,8 @@ resources:
       authenticated: true
 
     - id: 7
-      server_name: "sse/gpt"
-      url: "/message"
+      server_name: "gpt"
+      url: "/message/gpt-sse"
       method: "POST"
       version: "v1"
       description: "createMessageBySSE"
