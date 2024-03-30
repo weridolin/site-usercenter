@@ -49,6 +49,30 @@ func LoadInitData(c config.Config, DB *gorm.DB) {
 		fmt.Println("解析 yaml 文件失败：", err)
 		return
 	}
+
+	//删除权限数据
+	for _, permission := range defaultData.RolesResource {
+		DB.Unscoped().Where("role_id = ?", permission["role_id"]).Delete(&models.ResourcePermission{})
+	}
+
+	//2.
+
+	// fmt.Printf("defaultData → %+v\n", defaultData)
+	// 初始数据插入数据库
+	for _, resources := range defaultData.Resources {
+		//查出现有的资源
+		for _, resource := range resources {
+			// DB.Where("url = ?", resource.Url).Delete(&models.Resource{})
+			resource, err := models.QueryResource(map[string]interface{}{"url": resource.Url}, DB)
+			if err != nil {
+				fmt.Println("查询资源失败：", err)
+				DB.Create(resource)
+			}
+		}
+
+		// DB.Create(resources)
+	}
+
 	// fmt.Printf("defaultData → %+v\n", defaultData)
 	// 初始数据插入数据库
 	for _, resources := range defaultData.Resources {
@@ -67,28 +91,17 @@ func LoadInitData(c config.Config, DB *gorm.DB) {
 	for _, permission := range defaultData.RolesResource {
 		if permission["resource_id"] == "*" {
 			fmt.Println("add all resource permission to role_id: ", permission["role_id"])
-			// 先删除role_id已经有的权限
-			DB.Unscoped().Where("role_id = ?", permission["role_id"]).Delete(&models.ResourcePermission{})
 			var resourceIdList []int
 			for _, v := range resources {
 				resourceIdList = append(resourceIdList, v.ID)
 			}
 
-			// var count int64
-			// DB.Model(&models.Resource{}).Count(&count)
-			// // var resourceList []int
-			// for i := 1; i <= int(count); i++ {
-			// 	resourceList = append(resourceList, i)
-			// }
 			err = models.BatchBindResourcePermission(resourceIdList, permission["role_id"].(int), DB)
 			if err != nil {
 				fmt.Println("fail to bind resource to role -> ", err)
 			}
 		} else {
 			var list []models.ResourcePermission
-			// 先删除role_id已经有的权限
-			DB.Unscoped().Where("role_id = ?", permission["role_id"]).Delete(&models.ResourcePermission{})
-			// DB.Commit()
 			//在更新现有的权限
 			for _, v := range permission["resource_id"].([]interface{}) {
 				list = append(list, models.ResourcePermission{
