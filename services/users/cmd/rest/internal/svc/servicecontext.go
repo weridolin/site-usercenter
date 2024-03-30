@@ -65,7 +65,7 @@ func LoadInitData(c config.Config, DB *gorm.DB) {
 			// DB.Where("url = ?", resource.Url).Delete(&models.Resource{})
 			resource, err := models.QueryResource(map[string]interface{}{"url": resource.Url}, DB)
 			if err != nil {
-				fmt.Println("查询资源失败：", err)
+				fmt.Println("add new resource → ", resource)
 				DB.Create(resource)
 			}
 		}
