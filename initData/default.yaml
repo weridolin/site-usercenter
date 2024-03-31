@@ -754,7 +754,13 @@ resources:
       description: "stopMessageBySSE"
       authenticated: true
 
-
+  ws-api:
+    - id: 1
+      server_name: "ws-api"
+      url: "/gpt"
+      method: "GET"
+      version: "v1"
+      description: "chat ws connect"
 
 
 
