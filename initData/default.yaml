@@ -700,7 +700,7 @@ resources:
 
     - id: 3
       server_name: "gpt"
-      url: "/conversation/(?P<conversation_id>\\d+)"
+      url: "/conversation/(?P<conversation_id>.*)"
       method: "DELETE"
       version: "v1"
       description: "deleteConversation"
@@ -708,7 +708,7 @@ resources:
 
     - id: 4
       server_name: "gpt"
-      url: "/conversation/(?P<conversation_id>\\d+)"
+      url: "/conversation/(?P<conversation_id>.*)"
       method: "PUT"
       version: "v1"
       description: "updateConversation"
