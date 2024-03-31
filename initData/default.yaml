@@ -760,7 +760,7 @@ resources:
       url: "/gpt"
       method: "GET"
       version: "v1"
-      description: "chat ws connect",
+      description: "chat ws connect"
       authenticated: true
 
 
