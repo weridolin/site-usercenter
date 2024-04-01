@@ -754,9 +754,9 @@ resources:
       description: "stopMessageBySSE"
       authenticated: true
 
-  ws:
+  ws-endpoint:
     - id: 1
-      server_name: "ws"
+      server_name: "ws-endpoint"
       url: "/gpt"
       method: "GET"
       version: "v1"
