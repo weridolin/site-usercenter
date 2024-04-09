@@ -680,6 +680,14 @@ resources:
       version: "v1"
       description: "webhook"
       authenticated: false
+    
+    - id: 9
+      server_name: "webhook"
+      url: "/register-websocket"
+      method: "GET"
+      version: "v1"
+      description: "webhook"
+      authenticated: false
 
   gpt:
     - id: 1
@@ -757,7 +765,7 @@ resources:
   ws-endpoint:
     - id: 1
       server_name: "ws-endpoint"
-      url: "/gpt"
+      url: "/"
       method: "GET"
       version: "v1"
       description: "chat ws connect"
