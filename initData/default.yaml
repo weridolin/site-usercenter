@@ -182,7 +182,7 @@ resources:
       method: "POST"
       version: "v1"
       description: "假数据生成预数据上传"
-      authenticated: false
+      authenticated: true
 
 
     - id: 20
@@ -191,7 +191,7 @@ resources:
       method: "GET"
       version: "v1"
       description: "根据生成嘛搜索生成的信息"
-      authenticated: false
+      authenticated: true
 
 
     - id: 21
@@ -200,7 +200,7 @@ resources:
       method: "GET"
       version: "v1"
       description: "根据下载码下载生成的假数据"
-      authenticated: false
+      authenticated: true
 
 
   shortUrl:
