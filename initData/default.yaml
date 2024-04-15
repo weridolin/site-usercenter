@@ -187,7 +187,7 @@ resources:
 
     - id: 20
       server_name: "dataFaker"
-      url: "/search/"
+      url: "/search/(?P<download_code>.*)"
       method: "GET"
       version: "v1"
       description: "根据生成嘛搜索生成的信息"
