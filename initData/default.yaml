@@ -200,7 +200,7 @@ resources:
       method: "GET"
       version: "v1"
       description: "根据下载码下载生成的假数据"
-      authenticated: true
+      authenticated: false
 
 
   shortUrl:
