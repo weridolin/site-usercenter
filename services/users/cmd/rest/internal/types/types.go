@@ -114,3 +114,49 @@ type ReLoadResourceReq struct {
 type ReLoadResourceResp struct {
 	BaseResponse
 }
+
+type GetQrLoginCodeResp struct {
+	BaseResponse
+	Data string `json:"data"`
+
+}
+
+type GetLoginQrCodeStatusReq struct {
+	Uuid string `form:"uuid" query:"uuid"`
+}
+
+
+type LoginQrCodeStatusResp struct {
+	Status string `json:"status"`
+}
+
+
+type GetLoginQrCodeStatusResp struct {
+	BaseResponse
+	Data LoginQrCodeStatusResp `json:"data"`
+}
+
+type BindLocalAccountReq struct {
+	Password string `form:"password" json:"password"`
+	UserName string `form:"username" json:"username"`
+	Email string `form:"email" json:"email"`
+	State string `query:"state" json:"state"` 
+	ThirdUserId string `path:"third_user_id" json:"third_user_id"`
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

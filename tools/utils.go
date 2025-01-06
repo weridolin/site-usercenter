@@ -39,3 +39,7 @@ func GetUidFromCtx(ctx context.Context) int64 {
 	return uid
 
 }
+
+// func Int2String(i int) string {
+// 	return Int64ToStr(int64(i))
+// }

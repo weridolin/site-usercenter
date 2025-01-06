@@ -28,4 +28,13 @@ func UserPermissionKey(userID int) string {
 // 	return "resource_authenticated" + ":" + resource
 // }
 
-const ResourceAuthenticatedCacheKey = "site:resource_authenticated"
+/*
+oauth第三方登录防伪造
+*/
+func OauthStateCacheKey(state string) string {
+	return "oauth_state" + ":" + state
+}
+
+const (
+	ResourceAuthenticatedCacheKey = "site:resource_authenticated"
+)

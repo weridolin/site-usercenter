@@ -43,13 +43,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path: "/rbac/reloadResource",
 				Handler: rbac.ReLoadResourceHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/qrcode",
+				Handler: user.GetQrLoginCodeHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/qrlogin-status",
+				Handler: user.GetQrLoginStatusHandler(serverCtx),
+			},
+			{
+				Method: http.MethodGet,
+				Path: "/third-platform/resource",
+				Handler: user.GetThirdLoginUriHandler(serverCtx),
+			},
+			{
+				Method: http.MethodGet,
+				Path: "/third-platform/gitee-login",
+				Handler: user.LoginByGiteeHandler(serverCtx),
+			},
+			{
+				Method: http.MethodGet,
+				Path: "/third-platform/github-login",
+				Handler: user.LoginByGithubHandler(serverCtx),
+			},
+			{
+				Method: http.MethodPost,
+				Path: "/third-platform/bind/{third_user_id}",
+				Handler: user.BindLocalAccountHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/usercenter/api/v1"),
 	)
 
 	server.AddRoutes(
 		[]rest.Route{
-
 			{
 				Method:  http.MethodGet,
 				Path:    "/token/validate",

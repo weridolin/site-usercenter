@@ -13,6 +13,7 @@ type UserModel interface {
 	QueryUser(condition interface{}, DB *gorm.DB) (User, error)
 	Update(u User, DB *gorm.DB) error
 	CheckPWd(count, password string, DB *gorm.DB) (*User, error)
+	CreateUserByThirdPlatform(ThirdPlatform, id string, DB *gorm.DB) (user *User, err error)
 }
 
 type User struct {
@@ -23,11 +24,14 @@ type User struct {
 	Phone    string `gorm:"comment:手机号" json:"phone" form:"phone"`
 	Avatar   string `gorm:"comment:头像连接" json:"avatar" form:"avatar"`
 	// Role         pq.StringArray `gorm:"comment:角色;type:json" json:"role" form:"role" `
-	IsSuperAdmin bool    `gorm:"default:false" json:"is_super_admin" binding:"-"`
-	Deleted      bool    `gorm:"default:false" json:"-" binding:"-"`
-	Age          int     `gorm:"comment:年龄" json:"age"  form:"age"`
-	Gender       int8    `gorm:"comment:性别" json:"gender" form:"gender"`
-	Roles        []*Role `gorm:"many2many:user_roles;ForeignKey:ID;JoinForeignKey:UserId;References:ID;joinReferences:RoleId"`
+	IsSuperAdmin        bool    `gorm:"default:false" json:"is_super_admin" binding:"-"`
+	Deleted             bool    `gorm:"default:false" json:"-" binding:"-"`
+	Age                 int     `gorm:"comment:年龄" json:"age"  form:"age"`
+	Gender              int8    `gorm:"comment:性别" json:"gender" form:"gender"`
+	Roles               []*Role `gorm:"many2many:user_roles;ForeignKey:ID;JoinForeignKey:UserId;References:ID;joinReferences:RoleId"`
+	ThirdPlatform       string  `gorm:"comment:第三方平台,比如github" json:"third_platform" form:"third_platform"`
+	ThirdPlatformUserId string  `gorm:"comment:第三方平台id" json:"third_platform_id" form:"third_platform_user_id"`
+	IsBind              bool    `gorm:"comment:是否已经绑定了本地用户 default:false" json:"is_bind" `
 }
 
 type DefaultUserModel struct {
@@ -99,4 +103,21 @@ func (m DefaultUserModel) CheckPWd(count, password string, DB *gorm.DB) (*User, 
 	}
 
 	return &user, nil
+}
+
+func (u DefaultUserModel) CreateUserByThirdPlatform(ThirdPlatform, id string, DB *gorm.DB) (user *User, err error) {
+	err = DB.Table(u.Table).Where("third_platform = ? and third_platform_user_id = ?", ThirdPlatform, id).First(&user).Error
+	if err == nil {
+		return
+	} else {
+		user = &User{
+			ThirdPlatform:       ThirdPlatform,
+			ThirdPlatformUserId: id,
+			Username:            tools.GetMD5Hash(tools.GetUUID()),
+			Password:            "thirdLoginNotSecret",
+			IsBind:              false,
+		}
+		DB.Create(user)
+		return
+	}
 }

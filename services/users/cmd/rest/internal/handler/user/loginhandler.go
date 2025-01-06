@@ -21,6 +21,12 @@ func LoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := user.NewLoginLogic(r.Context(), svcCtx)
 		resp, err := l.Login(&req)
+		http.SetCookie(w, &http.Cookie{
+			Name:     "token",
+			Value:    resp.Data.AccessToken,
+			Path:     "/",
+			HttpOnly: true,
+			MaxAge:   60 * 5 * 24})
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

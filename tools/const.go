@@ -40,4 +40,9 @@ var (
 		Msg:  "internal error",
 		Code: 10007,
 	}
+
+	RedisKeyNotFoundError = CustomError{
+		Msg:  "redis key not found error",
+		Code: 10008,
+	}
 )

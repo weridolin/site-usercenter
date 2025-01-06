@@ -86,6 +86,8 @@ func main() {
 	conf.MustLoad(*configFile, &c, option)
 
 	server := rest.MustNewServer(c.RestConf)
+	// c.RestConf.Timeout = 30000
+	fmt.Println(c.RestConf.Timeout, ">>>>>>>")
 	defer server.Stop()
 
 	ctx := svc.NewServiceContext(c)
