@@ -43,9 +43,10 @@ Etcd:
 ## 链路追踪
 Middlewares:
   Trace: true
-  Metrics: true
+  Metrics: false
+
 Telemetry:
-  Name: usercenter.http
-  Endpoint: http://jaeger:14268/api/traces
-  Batcher: jaeger
+  Name: usercenter.rest
+  Endpoint: jaeger:4317
+  Batcher: otlpgrpc
   Sampler: 1.0

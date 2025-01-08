@@ -87,7 +87,6 @@ func main() {
 
 	server := rest.MustNewServer(c.RestConf)
 	// c.RestConf.Timeout = 30000
-	fmt.Println(c.RestConf.Timeout, ">>>>>>>")
 	defer server.Stop()
 
 	ctx := svc.NewServiceContext(c)

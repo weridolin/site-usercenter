@@ -154,7 +154,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	db.AutoMigrate(&models.Menu{})
 	db.AutoMigrate(&models.Resource{})
 
-	// LoadInitData(c, db)
+	LoadInitData(c, db)
 
 	return &ServiceContext{
 		Config:      c,

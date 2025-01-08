@@ -16,9 +16,10 @@ JwtAuth:
 ## 链路追踪
 Middlewares:
   Trace: true
-  Metrics: true
+  Metrics: false
+
 Telemetry:
   Name: usercenter.rpc
-  Endpoint: http://jaeger:14268/api/traces
-  Batcher: jaeger
+  Endpoint: jaeger:4317
+  Batcher: otlpgrpc
   Sampler: 1.0
