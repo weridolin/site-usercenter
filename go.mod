@@ -2,7 +2,7 @@ module github.com/weridolin/site-gateway
 
 go 1.21
 
-toolchain go1.23.1
+// toolchain go1.23.1
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
